@@ -1,207 +1,207 @@
 
 # Table of Contents
 
-1.  [Intro](#orgf6265ec)
-2.  [OpenDevStack](#org9b923c0)
-    1.  [Introduction](#org9b14bc7)
-    2.  [Requirements](#orgfa4e0c3)
-        -   [Git](#orgd6a8ad7)
-        -   [Vagrant](#org50ba992)
-        -   [Atlassian tools licenses](#org0fecb1a)
-        -   [Minishift](#org2636816)
-        -   [Cygwin / Linux](#orgcffdde5)
-        -   [Ansible](#org4641847)
-    3.  [Setup your local environment](#org1137340)
-        -   [Install tailor Utility](#org4dbde96)
-        -   [Prepare infrastructure](#orgaef6678)
-            -   [Clone opendevstack Project](#orge761a7e)
-            -   [Create environment with Vagrant](#org3261d83)
-            -   [Connect to the Ansible controller **atlcon**](#org694ce80)
-    4.  [Install Atlassian Tools and Rundeck](#org075e84c)
-        -   [Crowd Setup](#orgc54fec2)
-            -   [Setup Application](#orgf5518ad)
-            -   [Run Configuration Wizard](#orgf0f650b)
-            -   [Configure Crowd](#org04206b1)
-            -   [Add OpenDevStack groups](#org6beb320)
-            -   [Add Atlassian groups](#org9489cee)
-            -   [Add groups to user](#org581f539)
-            -   [Add applications to crowd](#org2012af5)
-        -   [Bitbucket Setup](#org9c776a1)
-            -   [Setup Application](#org5b93fb8)
-            -   [Run Configuration Wizard](#org8d03e18)
-            -   [Configure Crowd access](#orgfe8b3be)
-            -   [Configure user groups](#org2de22b6)
-        -   [Jira Setup](#orge2e7541)
-            -   [Setup Application](#orga54084d)
-            -   [Run Configuration Wizard](#org3235759)
-            -   [Setup application properties](#orgf7b71c9)
-            -   [Specify your license key](#org71047af)
-            -   [Set up administrator account](#org7da99c2)
-            -   [Set up email notifications](#orgeb02638)
-            -   [Basic configuration](#org2b7570f)
-            -   [Configure Crowd access](#orgaa27fb8)
-        -   [Confluence Setup](#org34f8f27)
-            -   [Setup Application](#org20a25be)
-            -   [Run Configuration Wizard](#orgac437e5)
-            -   [Set up Confluence](#org4765306)
-            -   [Get add-ons](#orgbf264de)
-            -   [License key](#org4526dbf)
-            -   [Choose a Database Configuration](#orge4f11f8)
-            -   [Configure Database](#orgba1eeb3)
-            -   [Load Content](#org231b5fb)
-            -   [Configure User Management](#orgd1c1782)
-            -   [Configure System Administrator account](#org9d99b3a)
-            -   [Configure Crowd access](#org1aa7f10)
-        -   [Create opendevstack project in Bitbucket](#org422188a)
-        -   [Rundeck Setup](#orgeba192c)
-            -   [Prepare ssh key pair](#org2c1b063)
-            -   [Configure CD user](#org49f7478)
-            -   [Customize Rundeck configuration](#orgb676205)
-            -   [Prepare Rundeck](#orga73e5a5)
-            -   [Create Quickstarters project](#orgc38f23e)
-            -   [CD user private key](#org0533d4e)
-            -   [Configure SCM plugins](#org86e7ff9)
-    5.  [Configure and Start Minishift](#org187cc40)
-        -   [Configure Minishift](#orgf94eb83)
-        -   [Create new Minishift Profile - opendevstack](#org4d59315)
-        -   [Start Minishift](#orga88316c)
-        -   [Configure the path for the OC CLI](#orgdbc322d)
-        -   [Login with the CLI](#org973631e)
-        -   [Setup the base template project](#orgf6463cf)
-        -   [Adjust user rights for the developer user](#orgd8003d2)
-        -   [Create service account for deployment](#orgd8d39ab)
-        -   [Install Minishift certificate on Atlassian server](#org60c9246)
-        -   [Clone the ods-project-quickstarters from your Bitbucket server](#org3b43c16)
-    6.  [Prepare environment settings](#org6c9eb91)
-    7.  [Setup and Configure Nexus3](#org717de00)
-        -   [Setup](#orgf9a4730)
-        -   [Configure Repository Manager](#org5d9da20)
-        -   [Configure repositories](#orgf4151e9)
-        -   [Configure user and roles](#orgecdc2f5)
-    8.  [Import base templates](#orge8429fe)
-        -   [Preparation](#org3349459)
-        -   [Upload](#org4445482)
-    9.  [Create secrets inside the CD project](#orgb9dacf2)
-    10. [Setup and configure Sonarqube](#org7c5f231)
-    11. [Explain all variables](#org28d8679)
-    12. [Prepare CD project for Jenkins](#orge07dae1)
-    13. [Prepare Jenkins slave docker images](#org996ad8b)
-        -   [Maven](#orgcf5c9d6)
-        -   [Python](#orgc6155a2)
-        -   [scala](#org3829011)
-        -   [nodejs8-angular](#org99aaf00)
-    14. [Prepare Docker Registry](#org1690329)
-    15. [Prepare Rundeck and required Dockerfiles](#org7693016)
-        -   [Create Quickstarters project](#org372111d)
-        -   [Openshift API token](#orgbfd757a)
-        -   [CD user private key](#org5ca3d7d)
-        -   [Configure SCM plugins](#org4419f43)
-            -   [Create **rundeck-changes** branch](#orgbb584b1)
-            -   [Setup Import plugin](#orge286a73)
-            -   [Setup Export plugin](#org2af81db)
-        -   [Update the job properties](#org4b1303d)
-        -   [Run the job **verify global rundeck Settings**](#orgca8d295)
-    16. [Add shared images](#org12850eb)
-    17. [Configure provisioning application](#org4ca98d8)
-    18. [Setup within Openshift](#org3defdd3)
-        -   [Login](#org430b742)
-        -   [Create projects](#org4871d6c)
-        -   [Run tailor](#org84cd5e2)
-            -   [prov-cd](#org95e28ab)
-            -   [prov-test](#orgc3df8e5)
-            -   [prov-dev](#org88ae42a)
-        -   [Go to openshift console](#org456afa9)
-            -   [Add Service Accounts with **edit** rights](#org8f7cda9)
-            -   [Run tailor](#org13a0a52)
-            -   [Last step](#orgea6f5a4)
-    19. [Try out the OpenDevStack](#org4b52858)
-3.  [Console URLs](#org5bac180)
-4.  [OpenDevStack - Products and Description](#orgb1edd8f)
-    1.  [Crowd](#org4119fee)
-        -   [Centralized identity management](#org5a03111)
-            -   [Single sign-on (SSO)](#orgd0cdc67)
-            -   [Centralize multiple directories](#org9db30a5)
-    2.  [Confluence](#org36d499e)
-        -   [Content collaboration software that changes how modern teams work](#org87c7654)
-            -   [Project collaboration](#org0040561)
-            -   [Knowledge base](#orgffe13ea)
-            -   [Team documentation](#org2634fbd)
-            -   [Document management](#org2f26f25)
-            -   [Page and file versioning](#org345f629)
-            -   [Templates](#orgc78b48b)
-            -   [Permissions](#orgb19278f)
-            -   [Jira](#org249aa25)
-    3.  [Jira](#orgf616208)
-        -   [Project management tool for agile teams](#org89ae8ff)
-            -   [Scrum boards](#org8881f9e)
-            -   [Kanban boards](#orga87c53f)
-            -   [Agile reporting](#orgcc4c5ff)
-            -   [Roadmaps](#org3c1111d)
-            -   [Customizable workflows](#orgdb708f9)
-            -   [Developer tool integrations](#orgf6e4adc)
-            -   [Custom filters](#org2b4aa6b)
-            -   [Rich APIs](#orge3b56ce)
-    4.  [Jira and Confluence](#orgafc2aee)
-    5.  [BitBucket](#orgb71c5bc)
-        -   [More than just Git code management](#orgf45133d)
-            -   [Free unlimited private repositories](#orgc6ff037)
-            -   [Best-in-class Jira & Trello integration](#orgf292281)
-            -   [Built-in Continuous Delivery](#org52cda13)
-            -   [Code Collaboration](#org5b0c794)
-            -   [Continuous Delivery](#org009fee7)
-            -   [Security](#orgd64ffa5)
-    6.  [Rundeck](#org572c236)
-        -   [Manage automation from legacy to cloud services](#orga820ed9)
-            -   [Scale Ops.](#org23c6d49)
-            -   [Eliminate the wait.](#orgaf267f1)
-            -   [Stay in control.](#orgda6b660)
-            -   [Be audit-ready.](#org41be34f)
-            -   [Create a job](#org7ecaec0)
-            -   [Safely hand off the job to others](#org1451309)
-            -   [Enjoy being the Hero.](#org077e480)
-    7.  [Nexus Repository](#orgee2cb8b)
-        -   [Flow control for binaries, build artifacts, and release candidates.](#orgfa1665e)
-            -   [The perfect system of record for all your software parts](#org909db15)
-            -   [Universal support for all your favorite formats and tools.](#org4507b8b)
-    8.  [SonarQube](#org153c8ad)
-        -   [Continuous Code Quality](#org46a22dd)
-            -   [Continuous Inspection](#orgec13fd9)
-            -   [Detect Tricky Issues](#org29c12eb)
-            -   [Centralize Quality](#org36facec)
-            -   [DevOps Integration](#org195f818)
-5.  [Install convenience environment](#org12cd3f2)
-    1.  [atlassian1](#org53ddf7d)
-    2.  [atlcon](#org5bbf725)
-6.  [Installation and Runtime Topology](#orgedf3b0e)
-    1.  [Atlassian products](#org281c18a)
-        -   [Installation directory (/opt/atlassian)](#org8bd9ebb)
-        -   [Crowd](#org1ca7672)
-        -   [Confluence](#org8a42d34)
-        -   [Jira](#org50b5f2b)
-        -   [BitBucket](#orga636e80)
-        -   [Home directory structure (/srv/atlassian)](#orga1b92ef)
-            -   [Atlassian products](#org179332f)
-            -   [Crowd](#org188d32f)
-            -   [Confluence](#org030d449)
-            -   [Jira](#orgef55610)
-            -   [BitBucket](#org8172df0)
-        -   [User home directories](#org6571070)
-    2.  [Rundeck](#org96213c4)
-    3.  [Docker](#org3868f65)
-        -   [Nexus3](#org45be9ca)
-        -   [SonarQube](#orga34add7)
-            -   [SonarQube-PostGreSQL](#org06d606e)
-    4.  [PostGreSQL](#org2d0e5de)
-    5.  [Processes](#org1c443c9)
-7.  [ToDo](#org4725769)
-    1.  [Configuring Minishift](#org8dce230)
-    2.  [Using Minishift - An OpenShift Origin All-in-One VM](#orgdc67153)
-    3.  [Problems when starting](#orgef85518)
-    4.  [tj](#orgb996ebd)
+1.  [Intro](#orgb7f797e)
+2.  [OpenDevStack](#org65ed870)
+    1.  [Introduction](#org707bf29)
+    2.  [Requirements](#org98cea0b)
+        -   [Git](#org7d213fe)
+        -   [Vagrant](#org00692c9)
+        -   [Atlassian tools licenses](#orgde4ca0b)
+        -   [Minishift](#org4156fac)
+        -   [Cygwin / Linux](#org60edc82)
+        -   [Ansible](#org27a504b)
+    3.  [Setup your local environment](#orge9a6ac3)
+        -   [Install tailor Utility](#org085850b)
+        -   [Prepare infrastructure](#org7239b78)
+            -   [Clone opendevstack Project](#org9cc4923)
+            -   [Create environment with Vagrant](#org0655aec)
+            -   [Connect to the Ansible controller **atlcon**](#org52246e0)
+    4.  [Install Atlassian Tools and Rundeck](#orgd8af351)
+        -   [Crowd Setup](#org2e8bcb5)
+            -   [Setup Application](#org68666b4)
+            -   [Run Configuration Wizard](#orga0db0c8)
+            -   [Configure Crowd](#org40a26ef)
+            -   [Add OpenDevStack groups](#orgbc74734)
+            -   [Add Atlassian groups](#org4f8ea4a)
+            -   [Add groups to user](#org78aa86f)
+            -   [Add applications to crowd](#org7e0cb3d)
+        -   [Bitbucket Setup](#org5b86705)
+            -   [Setup Application](#org8566634)
+            -   [Run Configuration Wizard](#org23da5f2)
+            -   [Configure Crowd access](#orgff0d16e)
+            -   [Configure user groups](#orga68604c)
+        -   [Jira Setup](#org0cd71a2)
+            -   [Setup Application](#org4c7aa7f)
+            -   [Run Configuration Wizard](#org62c465a)
+            -   [Setup application properties](#org3a04f79)
+            -   [Specify your license key](#orgee00125)
+            -   [Set up administrator account](#orge75642c)
+            -   [Set up email notifications](#org52f0a6a)
+            -   [Basic configuration](#org6eb5cbb)
+            -   [Configure Crowd access](#org91f20ad)
+        -   [Confluence Setup](#orgb72e52a)
+            -   [Setup Application](#org92fd15d)
+            -   [Run Configuration Wizard](#org16183b5)
+            -   [Set up Confluence](#orge11f013)
+            -   [Get add-ons](#org9069fba)
+            -   [License key](#orgdf5bdbd)
+            -   [Choose a Database Configuration](#org5def868)
+            -   [Configure Database](#org3f503c3)
+            -   [Load Content](#orgd6aefb4)
+            -   [Configure User Management](#org6ad4185)
+            -   [Configure System Administrator account](#org3836279)
+            -   [Configure Crowd access](#org01bcc5f)
+        -   [Create opendevstack project in Bitbucket](#orgf7db79f)
+        -   [Rundeck Setup](#orgd7b85f7)
+            -   [Prepare ssh key pair](#orga612d39)
+            -   [Configure CD user](#org19963b0)
+            -   [Customize Rundeck configuration](#orgadb6b36)
+            -   [Prepare Rundeck](#orgba54ece)
+            -   [Create Quickstarters project](#orgf286e3e)
+            -   [CD user private key](#orgb1dc9c5)
+            -   [Configure SCM plugins](#orgadb4984)
+    5.  [Configure and Start Minishift](#orgb7efef3)
+        -   [Configure Minishift](#org5f1b029)
+        -   [Create new Minishift Profile - opendevstack](#org11cca38)
+        -   [Start Minishift](#org73e2d32)
+        -   [Configure the path for the OC CLI](#org38852cf)
+        -   [Login with the CLI](#org435f7f2)
+        -   [Setup the base template project](#org2378ce4)
+        -   [Adjust user rights for the developer user](#org612f9d4)
+        -   [Create service account for deployment](#orgf59abdc)
+        -   [Install Minishift certificate on Atlassian server](#org698fd95)
+        -   [Clone the ods-project-quickstarters from your Bitbucket server](#org26163d8)
+    6.  [Prepare environment settings](#orgec0507a)
+    7.  [Setup and Configure Nexus3](#org7c51c62)
+        -   [Setup](#org93c5d5e)
+        -   [Configure Repository Manager](#org5a54cfb)
+        -   [Configure repositories](#orgc2847f9)
+        -   [Configure user and roles](#org2a43d58)
+    8.  [Import base templates](#org93f237b)
+        -   [Preparation](#orgbba2a1f)
+        -   [Upload](#orgc653a92)
+    9.  [Create secrets inside the CD project](#org74929d2)
+    10. [Setup and configure Sonarqube](#orgb7272ea)
+    11. [Explain all variables](#orgb390bf7)
+    12. [Prepare CD project for Jenkins](#orgaf58cca)
+    13. [Prepare Jenkins slave docker images](#org78081ad)
+        -   [Maven](#orgab20e67)
+        -   [Python](#org9b6ff1c)
+        -   [scala](#orgd0b33bc)
+        -   [nodejs8-angular](#orgf6f5244)
+    14. [Prepare Docker Registry](#org2ec5c48)
+    15. [Prepare Rundeck and required Dockerfiles](#orgf6d58b0)
+        -   [Create Quickstarters project](#orgcaefe4a)
+        -   [Openshift API token](#org02e4964)
+        -   [CD user private key](#orga1948f3)
+        -   [Configure SCM plugins](#orgefd0168)
+            -   [Create **rundeck-changes** branch](#org64378b7)
+            -   [Setup Import plugin](#org36fcf54)
+            -   [Setup Export plugin](#org6479e41)
+        -   [Update the job properties](#org2ee259d)
+        -   [Run the job **verify global rundeck Settings**](#orgf940560)
+    16. [Add shared images](#org8abd84b)
+    17. [Configure provisioning application](#orga0246a9)
+    18. [Setup within Openshift](#org6ea9e6f)
+        -   [Login](#orgac0ed81)
+        -   [Create projects](#org881fc46)
+        -   [Run tailor](#orgbd8b4bf)
+            -   [prov-cd](#org2605788)
+            -   [prov-test](#org53b7221)
+            -   [prov-dev](#orgffc72be)
+        -   [Go to openshift console](#org848fec1)
+            -   [Add Service Accounts with **edit** rights](#org8a5c608)
+            -   [Run tailor](#org529a9d5)
+            -   [Last step](#orge5dc7d4)
+    19. [Try out the OpenDevStack](#org7ea5e9f)
+3.  [Console URLs](#org9b4badc)
+4.  [OpenDevStack - Products and Description](#orgaca71f2)
+    1.  [Crowd](#org2eb1955)
+        -   [Centralized identity management](#orgad22ade)
+            -   [Single sign-on (SSO)](#org1696de1)
+            -   [Centralize multiple directories](#orga14e836)
+    2.  [Confluence](#orga36e945)
+        -   [Content collaboration software that changes how modern teams work](#org9b0e2bd)
+            -   [Project collaboration](#orgb607d71)
+            -   [Knowledge base](#orgadd1a84)
+            -   [Team documentation](#org813be1e)
+            -   [Document management](#org991300e)
+            -   [Page and file versioning](#orga988a0f)
+            -   [Templates](#orga37f16f)
+            -   [Permissions](#org7048bd2)
+            -   [Jira](#org0d91b92)
+    3.  [Jira](#org704eb69)
+        -   [Project management tool for agile teams](#org1bec26c)
+            -   [Scrum boards](#orgcd1bee7)
+            -   [Kanban boards](#orgdcebe4f)
+            -   [Agile reporting](#org2d181cd)
+            -   [Roadmaps](#org4a52b65)
+            -   [Customizable workflows](#org8254b56)
+            -   [Developer tool integrations](#orgfdc8253)
+            -   [Custom filters](#org3861936)
+            -   [Rich APIs](#org3f0fa73)
+    4.  [Jira and Confluence](#org4eb522e)
+    5.  [BitBucket](#org8e18525)
+        -   [More than just Git code management](#org428c8d4)
+            -   [Free unlimited private repositories](#org6d19416)
+            -   [Best-in-class Jira & Trello integration](#org0abfa44)
+            -   [Built-in Continuous Delivery](#org34dac56)
+            -   [Code Collaboration](#orgce338af)
+            -   [Continuous Delivery](#orga80e18e)
+            -   [Security](#org864c400)
+    6.  [Rundeck](#org7850cec)
+        -   [Manage automation from legacy to cloud services](#org7fe88d3)
+            -   [Scale Ops.](#org40decc4)
+            -   [Eliminate the wait.](#org749934b)
+            -   [Stay in control.](#org758e3e8)
+            -   [Be audit-ready.](#orge112b69)
+            -   [Create a job](#orge4313df)
+            -   [Safely hand off the job to others](#org65a3eb0)
+            -   [Enjoy being the Hero.](#orge677a8d)
+    7.  [Nexus Repository](#orgb2fa14a)
+        -   [Flow control for binaries, build artifacts, and release candidates.](#org33c8b03)
+            -   [The perfect system of record for all your software parts](#orgfd10ef3)
+            -   [Universal support for all your favorite formats and tools.](#orge5a4aad)
+    8.  [SonarQube](#org6267e77)
+        -   [Continuous Code Quality](#orgc1ebc00)
+            -   [Continuous Inspection](#org360af21)
+            -   [Detect Tricky Issues](#org6c484c8)
+            -   [Centralize Quality](#orgb330856)
+            -   [DevOps Integration](#orgf49a63e)
+5.  [Install convenience environment](#org66856db)
+    1.  [atlassian1](#org183d019)
+    2.  [atlcon](#orgda56ba5)
+6.  [Installation and Runtime Topology](#orgda83c65)
+    1.  [Atlassian products](#org63ec6e8)
+        -   [Installation directory (/opt/atlassian)](#org8863322)
+        -   [Crowd](#org2ce745e)
+        -   [Confluence](#orgdaffaad)
+        -   [Jira](#org74f1d64)
+        -   [BitBucket](#orgcfaeb8d)
+        -   [Home directory structure (/srv/atlassian)](#org9631c13)
+            -   [Atlassian products](#org36f30a6)
+            -   [Crowd](#orgb1701bc)
+            -   [Confluence](#orgefde6a2)
+            -   [Jira](#org54706cb)
+            -   [BitBucket](#org43885dd)
+        -   [User home directories](#org2db35a0)
+    2.  [Rundeck](#org46456e4)
+    3.  [Docker](#orge01a2e7)
+        -   [Nexus3](#orgf6c9a52)
+        -   [SonarQube](#orgb31fa21)
+            -   [SonarQube-PostGreSQL](#org4c70b5d)
+    4.  [PostGreSQL](#orgf3ce42b)
+    5.  [Processes](#org5294214)
+7.  [ToDo](#orgdeece8e)
+    1.  [Configuring Minishift](#orgd03ccc0)
+    2.  [Using Minishift - An OpenShift Origin All-in-One VM](#org6d2e638)
+    3.  [Problems when starting](#org8b901a2)
+    4.  [tj](#org0252ab9)
 
 
 
-<a id="orgf6265ec"></a>
+<a id="orgb7f797e"></a>
 
 # Intro
 
@@ -301,14 +301,14 @@ this **website**
 </table>
 
 
-<a id="org9b923c0"></a>
+<a id="org65ed870"></a>
 
 # OpenDevStack
 
 <http://www.opendevstack.org/doc/getting-started>
 
 
-<a id="org9b14bc7"></a>
+<a id="org707bf29"></a>
 
 ## Introduction
 
@@ -325,21 +325,21 @@ within the local test installation. For use in production you will have to
 customize paths, URLs and credentials!
 
 
-<a id="orgfa4e0c3"></a>
+<a id="org98cea0b"></a>
 
 ## Requirements
 
 The following requirements have to be met to setup a local environment
 
 
-<a id="orgd6a8ad7"></a>
+<a id="org7d213fe"></a>
 
 ### Git
 
 We use Git as code repository, so you have to be familiar to work with Git.
 
 
-<a id="org50ba992"></a>
+<a id="org00692c9"></a>
 
 ### Vagrant
 
@@ -350,7 +350,7 @@ Atlassian VM. It is recommended to use the latest Vagrant version available from
 the HashiCorp Vagrant page.
 
 
-<a id="org0fecb1a"></a>
+<a id="orgde4ca0b"></a>
 
 ### Atlassian tools licenses
 
@@ -371,7 +371,7 @@ you are able to include the licenses within the installation wizards of the
 tools, after the base setup provided by the Ansible scripts.
 
 
-<a id="org2636816"></a>
+<a id="org4156fac"></a>
 
 ### Minishift
 
@@ -383,7 +383,7 @@ at the Minishift Getting Started guide. Currently the OpenDevStack works with
 Openshift 3.9.0.
 
 
-<a id="orgcffdde5"></a>
+<a id="org60edc82"></a>
 
 ### Cygwin / Linux
 
@@ -409,7 +409,7 @@ dbhome: /%H
 This is described in the cygwin user guide.
 
 
-<a id="org4641847"></a>
+<a id="org27a504b"></a>
 
 ### Ansible
 
@@ -420,14 +420,14 @@ if you commit them in a public repository they are not available unless you know
 the vault password.
 
 
-<a id="org1137340"></a>
+<a id="orge9a6ac3"></a>
 
 ## Setup your local environment
 
 From now on we assume, you work from a Bash (Cygwin / Linux).
 
 
-<a id="org4dbde96"></a>
+<a id="org085850b"></a>
 
 ### TODO Install tailor Utility
 
@@ -507,12 +507,12 @@ version of **tailer**.
     # 0.9.0
 
 
-<a id="orgaef6678"></a>
+<a id="org7239b78"></a>
 
 ### Prepare infrastructure
 
 
-<a id="orge761a7e"></a>
+<a id="org9cc4923"></a>
 
 #### Clone opendevstack Project
 
@@ -529,7 +529,7 @@ First you have to clone the ods-core repository.
     # Resolving deltas: 100% (129/129), done.
 
 
-<a id="org3261d83"></a>
+<a id="org0655aec"></a>
 
 #### Create environment with Vagrant
 
@@ -1363,7 +1363,7 @@ Vagrant file. You can start the infrastructure provisioning and setup by using
     #     atlcon: Complete!
 
 
-<a id="org694ce80"></a>
+<a id="org52246e0"></a>
 
 #### Connect to the Ansible controller **atlcon**
 
@@ -1761,19 +1761,19 @@ All ansible playbook commands in this guide have to be executed from the Ansible
 controller like described before!
 
 
-<a id="org075e84c"></a>
+<a id="orgd8af351"></a>
 
 ## Install Atlassian Tools and Rundeck
 
 The following steps explain the **Atlassian tools** and the **Rundeck** installation.
 
 
-<a id="orgc54fec2"></a>
+<a id="org2e8bcb5"></a>
 
 ### Crowd Setup
 
 
-<a id="orgf5518ad"></a>
+<a id="org68666b4"></a>
 
 #### Setup Application
 
@@ -2304,7 +2304,7 @@ Add java 8.0.192 to the relevant files
     # atlassian1                 : ok=49   changed=29   unreachable=0    failed=0   
 
 
-<a id="orgf0f650b"></a>
+<a id="orga0db0c8"></a>
 
 #### Run Configuration Wizard
 
@@ -2464,7 +2464,7 @@ Be patient. First time accessing this page will take some time.
     <http://192.168.56.31:8095>
 
 
-<a id="org04206b1"></a>
+<a id="org40a26ef"></a>
 
 #### Configure Crowd
 
@@ -2472,7 +2472,7 @@ You will have to configure **crowd** to enable the **Atlassian tools** and **Run
 login with crowd credentials.
 
 
-<a id="org6beb320"></a>
+<a id="orgbc74734"></a>
 
 #### Add OpenDevStack groups
 
@@ -2512,7 +2512,7 @@ below and link it to the created internal directory.
 </table>
 
 
-<a id="org9489cee"></a>
+<a id="org4f8ea4a"></a>
 
 #### Add Atlassian groups
 
@@ -2578,7 +2578,7 @@ You also have to add the groups from the atlassian tools, even if you don’t us
 </table>
 
 
-<a id="org581f539"></a>
+<a id="org78aa86f"></a>
 
 #### Add groups to user
 
@@ -2588,7 +2588,7 @@ in Crowd, click on the hyperlink of your **administration user** and open the
 empty and add all groups by clicking on **Add selected groups**.
 
 
-<a id="org2012af5"></a>
+<a id="org7e0cb3d"></a>
 
 #### TODO Add applications to crowd
 
@@ -2722,12 +2722,12 @@ Don't forget to click on the **Add application** button on the final screen afte
 After adding all the applications edit each one, go to the **Remote adresses** tab and add **0.0.0.0/0**
 
 
-<a id="org9c776a1"></a>
+<a id="org5b86705"></a>
 
 ### Bitbucket Setup
 
 
-<a id="org5b93fb8"></a>
+<a id="org8566634"></a>
 
 #### Setup Application
 
@@ -3110,7 +3110,7 @@ After adding all the applications edit each one, go to the **Remote adresses** t
     # atlassian1                 : ok=28   changed=11   unreachable=0    failed=0   
 
 
-<a id="org8d03e18"></a>
+<a id="org23da5f2"></a>
 
 #### Run Configuration Wizard
 
@@ -3145,7 +3145,7 @@ account.
 **Go to Bitbucket**.
 
 
-<a id="orgfe8b3be"></a>
+<a id="orgff0d16e"></a>
 
 #### Configure Crowd access
 
@@ -3173,7 +3173,7 @@ Now change the **order** of the user directories. The **Crowd directory** has to
 **first position**.
 
 
-<a id="org2de22b6"></a>
+<a id="orga68604c"></a>
 
 #### Configure user groups
 
@@ -3221,12 +3221,12 @@ Now change the **order** of the user directories. The **Crowd directory** has to
     in the **Add Groups** input form and after completion by clicking on the **Add** button.
 
 
-<a id="orge2e7541"></a>
+<a id="org0cd71a2"></a>
 
 ### Jira Setup
 
 
-<a id="orga54084d"></a>
+<a id="org4c7aa7f"></a>
 
 #### Setup Application
 
@@ -3544,7 +3544,7 @@ Now change the **order** of the user directories. The **Crowd directory** has to
     # atlassian1                 : ok=23   changed=8    unreachable=0    failed=0   
 
 
-<a id="org3235759"></a>
+<a id="org62c465a"></a>
 
 #### Run Configuration Wizard
 
@@ -3553,7 +3553,7 @@ Now change the **order** of the user directories. The **Crowd directory** has to
 Be patient. First time accessing this page takes time.
 
 
-<a id="orgf7b71c9"></a>
+<a id="org3a04f79"></a>
 
 #### Setup application properties
 
@@ -3561,7 +3561,7 @@ Here you have to choose the application title and the base URL. You can leave
 the data as is for the test environment.
 
 
-<a id="org71047af"></a>
+<a id="orgee00125"></a>
 
 #### Specify your license key
 
@@ -3579,7 +3579,7 @@ Click on **Yes**
 Click on **Next**
 
 
-<a id="org7da99c2"></a>
+<a id="orge75642c"></a>
 
 #### Set up administrator account
 
@@ -3594,14 +3594,14 @@ Now you have to set up a Jira administrator account.
 Click **Next**
 
 
-<a id="orgeb02638"></a>
+<a id="org52f0a6a"></a>
 
 #### Set up email notifications
 
 Unless you have configured a mail server, choose **Later** and click on **Finish**.
 
 
-<a id="org2b7570f"></a>
+<a id="org6eb5cbb"></a>
 
 #### Basic configuration
 
@@ -3616,7 +3616,7 @@ After these basic configurations, you have access
 to the Jira board.
 
 
-<a id="orgaa27fb8"></a>
+<a id="org91f20ad"></a>
 
 #### Configure Crowd access
 
@@ -3693,12 +3693,12 @@ to the Jira board.
     </div>
 
 
-<a id="org34f8f27"></a>
+<a id="orgb72e52a"></a>
 
 ### Confluence Setup
 
 
-<a id="org20a25be"></a>
+<a id="org92fd15d"></a>
 
 #### Setup Application
 
@@ -4006,42 +4006,42 @@ to the Jira board.
     # 
 
 
-<a id="orgac437e5"></a>
+<a id="org16183b5"></a>
 
 #### Run Configuration Wizard
 
 <http://192.168.56.31:8090>
 
 
-<a id="org4765306"></a>
+<a id="orge11f013"></a>
 
 #### Set up Confluence
 
 Here you have to choose **Production Installation**, because we want to configure an external database.
 
 
-<a id="orgbf264de"></a>
+<a id="org9069fba"></a>
 
 #### Get add-ons
 
 Ensure the **add-ons** are **unchecked** and proceed.
 
 
-<a id="org4526dbf"></a>
+<a id="orgdf5bdbd"></a>
 
 #### License key
 
 Here you are able to **Get an evaluation license** from atlassian or to enter a valid license key.
 
 
-<a id="orge4f11f8"></a>
+<a id="org5def868"></a>
 
 #### Choose a Database Configuration
 
 Here you have to choose **External Database** with the option **PostgreSQL**
 
 
-<a id="orgba1eeb3"></a>
+<a id="org3f503c3"></a>
 
 #### Configure Database
 
@@ -4091,7 +4091,7 @@ Click the **Direct JDBC** button and configure the database with the following v
 Be patient. This step takes some time until next page appears.
 
 
-<a id="org231b5fb"></a>
+<a id="orgd6aefb4"></a>
 
 #### Load Content
 
@@ -4100,14 +4100,14 @@ Here you have to choose **Empty Site** or **Example Site**
 Click on **Example Site**
 
 
-<a id="orgd1c1782"></a>
+<a id="org6ad4185"></a>
 
 #### Configure User Management
 
 Choose **Manage users and groups within Confluence**. Crowd will be configured later.
 
 
-<a id="org9d99b3a"></a>
+<a id="org3836279"></a>
 
 #### Configure System Administrator account
 
@@ -4123,7 +4123,7 @@ After this step, you are able to work with Confluence. Just press **Start** and
 create a **space**.
 
 
-<a id="org1aa7f10"></a>
+<a id="org01bcc5f"></a>
 
 #### Configure Crowd access
 
@@ -4187,7 +4187,7 @@ create a **space**.
     credentials.
 
 
-<a id="org422188a"></a>
+<a id="orgf7db79f"></a>
 
 ### Create opendevstack project in Bitbucket
 
@@ -4321,12 +4321,12 @@ Setup project branch permissions - **production** should be guarded against dire
 merges except through admins.
 
 
-<a id="orgeba192c"></a>
+<a id="orgd7b85f7"></a>
 
 ### Rundeck Setup
 
 
-<a id="org2c1b063"></a>
+<a id="orga612d39"></a>
 
 #### TODO Prepare ssh key pair
 
@@ -4380,7 +4380,7 @@ This saves the public and private key in a file `cd_user.pub` and `cd_user`.
     # -----END RSA PRIVATE KEY-----
 
 
-<a id="org49f7478"></a>
+<a id="org19963b0"></a>
 
 #### TODO Configure CD user
 
@@ -4450,7 +4450,7 @@ the public key from the generated key pair, after clicking the **Add key** butto
     # ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIFfxfrg+A/QOpnNcISlcK1mX37UWHi3g5Xq7ORhVbUd2Fe5L9q8QqJlILN5z20uL285KS1LqZ8HYmDCnpis0CMMvuXjK4SSFzfJx0Yizz8+4wcry2HSuAlWafV2oDDr7n0215otgqi2HFxNikyXfhss6fTgERqAZHKLHT8fNX4hNajspkweqlUyOcgLvYd07HiR/n08lUp7TdAze1DYk/wVsSq0yiGLp3kIg1B0EwITuyHaoPlxRVEGuceAgBTZ3r3j0rxlJGFEIo8CpzQwH+vV80CNXrFMfzagLrXpzIUDj6gdieDp2aQvDg2tL9U6booQFg4y8iC0M2O6BcJ2uj CD User
 
 
-<a id="orgb676205"></a>
+<a id="orgadb6b36"></a>
 
 #### Customize Rundeck configuration
 
@@ -4802,7 +4802,7 @@ playbook has been finished Rundeck is accessible via
 <http://192.168.56.31:4440/rundeck>
 
 
-<a id="orga73e5a5"></a>
+<a id="orgba54ece"></a>
 
 #### Prepare Rundeck
 
@@ -4812,7 +4812,7 @@ well. Access Rundeck, login (vzell/opendevstack) and open the configuration.
 <http://192.168.56.31:4440/rundeck>
 
 
-<a id="orgc38f23e"></a>
+<a id="orgf286e3e"></a>
 
 #### Create Quickstarters project
 
@@ -4820,7 +4820,7 @@ Create a project named **Quickstarters**. The project doesn’t need any additio
 information, so leave all other options blank.
 
 
-<a id="org0533d4e"></a>
+<a id="orgb1dc9c5"></a>
 
 #### CD user private key
 
@@ -4871,7 +4871,7 @@ You can reference this stored Key using the storage path: **keys/id\_rsa\_bitbuc
 **Save** the key.
 
 
-<a id="org86e7ff9"></a>
+<a id="orgadb4984"></a>
 
 #### Configure SCM plugins
 
@@ -4978,12 +4978,12 @@ You can reference this stored Key using the storage path: **keys/id\_rsa\_bitbuc
     **rundeck-jobs/\({job.group}\){job.name}.${config.format}**
 
 
-<a id="org187cc40"></a>
+<a id="orgb7efef3"></a>
 
 ## Configure and Start Minishift
 
 
-<a id="orgf94eb83"></a>
+<a id="org5f1b029"></a>
 
 ### Configure Minishift
 
@@ -5024,7 +5024,7 @@ run the “minishift start” command as administrator.
     }
 
 
-<a id="org4d59315"></a>
+<a id="org11cca38"></a>
 
 ### Create new Minishift Profile - opendevstack
 
@@ -5076,7 +5076,7 @@ There is actually already v3.11.0 available&#x2026;
     # Profile 'opendevstack' set as active profile.
 
 
-<a id="orga88316c"></a>
+<a id="org73e2d32"></a>
 
 ### Start Minishift
 
@@ -5485,7 +5485,7 @@ access the webconsole with the credentials developer developer. It is important
 not to use the system user, because Jenkins does not allow a user named system.
 
 
-<a id="orgdbc322d"></a>
+<a id="org38852cf"></a>
 
 ### Configure the path for the OC CLI
 
@@ -5496,7 +5496,7 @@ not to use the system user, because Jenkins does not allow a user named system.
     # # eval $(minishift oc-env)
 
 
-<a id="org973631e"></a>
+<a id="org435f7f2"></a>
 
 ### Login with the CLI
 
@@ -5523,7 +5523,7 @@ not to use the system user, because Jenkins does not allow a user named system.
     # Using project "myproject".
 
 
-<a id="orgf6463cf"></a>
+<a id="org2378ce4"></a>
 
 ### Setup the base template project
 
@@ -5544,7 +5544,7 @@ command to add the base project:
 This command will create the base project.
 
 
-<a id="orgd8003d2"></a>
+<a id="org612f9d4"></a>
 
 ### Adjust user rights for the developer user
 
@@ -5556,7 +5556,7 @@ for the developer use. Do so by using the provided command
     # cluster role "cluster-admin" added: "developer"
 
 
-<a id="orgd8d39ab"></a>
+<a id="orgf59abdc"></a>
 
 ### Create service account for deployment
 
@@ -5581,7 +5581,7 @@ After you have created the service account we need the token for this account.
 Save the token text. It will be used in the Rundeck configuration later.
 
 
-<a id="org60c9246"></a>
+<a id="org698fd95"></a>
 
 ### TODO Install Minishift certificate on Atlassian server
 
@@ -5858,7 +5858,7 @@ Restart the bitbucket service
 We need this certificate for the Rundeck part later as well
 
 
-<a id="org3b43c16"></a>
+<a id="org26163d8"></a>
 
 ### Clone the ods-project-quickstarters from your Bitbucket server
 
@@ -5917,7 +5917,7 @@ so we can accept the ssh host key.
     #    7c8e279..e595a79  master -> master
 
 
-<a id="org6c9eb91"></a>
+<a id="orgec0507a"></a>
 
 ## TODO Prepare environment settings
 
@@ -6045,12 +6045,12 @@ Also change ****REPO\_BASE**** in all .env files to
     REPO_BASE=http://192.168.56.31:7990/scm
 
 
-<a id="org717de00"></a>
+<a id="org7c51c62"></a>
 
 ## Setup and Configure Nexus3
 
 
-<a id="orgf9a4730"></a>
+<a id="org93c5d5e"></a>
 
 ### Setup
 
@@ -6245,7 +6245,7 @@ Go to `ods-core/nexus/ocp-config` - and type `oc-tailor update`
     oc-tailor status -l app=nexus3 -n cd
 
 
-<a id="org5d9da20"></a>
+<a id="org5a54cfb"></a>
 
 ### Configure Repository Manager
 
@@ -6259,7 +6259,7 @@ Click on **Sign in** and login with the default credentials for Nexus3:
     password: admin123
 
 
-<a id="orgf4151e9"></a>
+<a id="orgc2847f9"></a>
 
 ### TODO Configure repositories
 
@@ -6411,7 +6411,7 @@ Administation->Repository->Repositories
 <td class="org-left">Strict</td>
 <td class="org-left">atlassian\_public</td>
 <td class="org-left">checked</td>
-<td class="org-left">Disable-redeploy !</td>
+<td class="org-left">Disable-redeploy</td>
 <td class="org-left"><https://maven.atlassian.com/content/repositories/atlassian-public/></td>
 <td class="org-left">&#xa0;</td>
 </tr>
@@ -6426,7 +6426,7 @@ Administation->Repository->Repositories
 <td class="org-left">Strict</td>
 <td class="org-left">default</td>
 <td class="org-left">checked</td>
-<td class="org-left">Disable-redeploy !</td>
+<td class="org-left">Disable-redeploy</td>
 <td class="org-left"><https://jcenter.bintray.com></td>
 <td class="org-left">maven-public</td>
 </tr>
@@ -6441,7 +6441,7 @@ Administation->Repository->Repositories
 <td class="org-left">permissive</td>
 <td class="org-left">default</td>
 <td class="org-left">unchecked</td>
-<td class="org-left">Disable-redeploy !</td>
+<td class="org-left">Disable-redeploy</td>
 <td class="org-left"><http://dl.bintray.com/sbt/sbt-plugin-releases/></td>
 <td class="org-left">ivy-releases</td>
 </tr>
@@ -6456,7 +6456,7 @@ Administation->Repository->Repositories
 <td class="org-left">permissive</td>
 <td class="org-left">default</td>
 <td class="org-left">unchecked</td>
-<td class="org-left">Disable-redeploy !</td>
+<td class="org-left">Disable-redeploy</td>
 <td class="org-left"><https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases></td>
 <td class="org-left">ivy-releases</td>
 </tr>
@@ -6471,7 +6471,7 @@ Administation->Repository->Repositories
 <td class="org-left">permissive</td>
 <td class="org-left">default</td>
 <td class="org-left">unchecked</td>
-<td class="org-left">Disable-redeploy !</td>
+<td class="org-left">Disable-redeploy</td>
 <td class="org-left"><https://dl.bintray.com/typesafe/ivy-releases></td>
 <td class="org-left">ivy-releases</td>
 </tr>
@@ -6486,15 +6486,25 @@ Administation->Repository->Repositories
 <td class="org-left">permissive</td>
 <td class="org-left">default</td>
 <td class="org-left">unchecked</td>
-<td class="org-left">Disable-redeploy !</td>
+<td class="org-left">Disable-redeploy</td>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">?typesafe-ivy-releases?</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
 
+For the **ivy-releases** repository add the following **Member repositories** under **Group**:
 
-<a id="orgecdc2f5"></a>
+    sbt-plugins
+    sbt-releases
+    typesafe-ivy-releases
+
+For the **maven-public** repository add the following additional **Member repository** under **Group**:
+
+    jcenter
+
+
+<a id="org2a43d58"></a>
 
 ### Configure user and roles
 
@@ -6608,12 +6618,12 @@ and assign role **OpenDevStack-Developer** to this account.
 This account is later used for authentication against nexus to pull artifacts during build phase
 
 
-<a id="orge8429fe"></a>
+<a id="org93f237b"></a>
 
 ## TODO Import base templates
 
 
-<a id="org3349459"></a>
+<a id="orgbba2a1f"></a>
 
 ### Preparation
 
@@ -6696,7 +6706,7 @@ and run
     # c29uYXJxdWJl
 
 
-<a id="org4445482"></a>
+<a id="orgc653a92"></a>
 
 ### Upload
 
@@ -6711,7 +6721,7 @@ and run
     # template.template.openshift.io/rshiny-app created
 
 
-<a id="orgb9dacf2"></a>
+<a id="org74929d2"></a>
 
 ## TODO Create secrets inside the CD project
 
@@ -6722,11 +6732,13 @@ and run
     # secret/cd-user-token created
 
 
-<a id="org7c5f231"></a>
+<a id="orgb7272ea"></a>
 
 ## TODO Setup and configure Sonarqube
 
-Amend `ods-configuration/ods-core/sonarqube/ocp-config/sonarqube.env`
+Amend `/misc/vagrant/opendevstack/ods-configuration/ods-core/sonarqube/ocp-config/sonarqube.env`
+
+and change all parameter values with base64 in their name with **base64** encoded versions.
 
     cd /misc/vagrant/opendevstack/ods-core/sonarqube/ocp-config
 
@@ -6734,8 +6746,6 @@ and type **oc-tailor update** confirm with y and installation should start.
 
     oc-tailor update
     y
-
-New output
 
     # Comparing templates in D:\misc\vagrant\opendevstack\ods-core\sonarqube\ocp-config with OCP namespace cd.
     # Limiting resources to bc,dc,is,pvc,route,svc,secret,configmap with selector app=sonarqube.
@@ -6832,494 +6842,6 @@ New output
     # Patch DeploymentConfig sonarqube-postgresql
     # Patch DeploymentConfig sonarqube
 
-Old output
-
-    # Comparing templates in D:\misc\vagrant\opendevstack\ods-core\sonarqube\ocp-config with OCP namespace cd.
-    # Limiting resources to bc,dc,is,pvc,route,svc,secret,configmap with selector app=sonarqube.
-    # Found 0 resources in OCP cluster (current state) and 13 resources in processed templates (desired state).
-    # 
-    # + cm/sonarqube to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,15 @@
-    # +apiVersion: v1
-    # +data:
-    # +  crowd-application: sonarqube
-    # +  crowd-url: http://192.168.56.31:8095/crowd
-    # +  database-jdbc-url: jdbc:postgresql://sonarqube-postgresql:5432/sonarqube
-    # +  database-name: sonarqube
-    # +  database-user: sonarqube
-    # +  sonarqube-admin-user: admin
-    # +kind: ConfigMap
-    # +metadata:
-    # +  annotations: {}
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube
-    #  
-    # + secret/sonarqube-app to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,13 @@
-    # +apiVersion: v1
-    # +data:
-    # +  admin-password: b3BlbmRldnN0YWNr
-    # +  auth-token: b3BlbmRldnN0YWNr
-    # +  crowd-password: c29uYXJxdWJl
-    # +kind: Secret
-    # +metadata:
-    # +  annotations: {}
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube-app
-    # +type: Opaque
-    #  
-    # + secret/sonarqube-postgresql to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,16 @@
-    # +apiVersion: v1
-    # +data:
-    # +  database-password: c29uYXJxdWJl
-    # +kind: Secret
-    # +metadata:
-    # +  annotations:
-    # +    managed-annotations.tailor.opendevstack.org: template.openshift.io/expose-database_name,template.openshift.io/expose-password,template.openshift.io/expose-username
-    # +    template.openshift.io/expose-database_name: '{.data[''database-name'']}'
-    # +    template.openshift.io/expose-password: '{.data[''database-password'']}'
-    # +    template.openshift.io/expose-username: '{.data[''database-user'']}'
-    # +  labels:
-    # +    app: sonarqube
-    # +    template: postgresql-persistent-template
-    # +  name: sonarqube-postgresql
-    # +type: Opaque
-    #  
-    # + pvc/sonarqube-postgresql to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,18 @@
-    # +apiVersion: v1
-    # +kind: PersistentVolumeClaim
-    # +metadata:
-    # +  annotations:
-    # +    managed-annotations.tailor.opendevstack.org: volume.beta.kubernetes.io/storage-provisioner
-    # +    volume.beta.kubernetes.io/storage-provisioner: ""
-    # +  labels:
-    # +    app: sonarqube
-    # +    template: postgresql-persistent-template
-    # +  name: sonarqube-postgresql
-    # +spec:
-    # +  accessModes:
-    # +  - ReadWriteOnce
-    # +  resources:
-    # +    requests:
-    # +      storage: 2Gi
-    # +  storageClassName: ""
-    #  
-    # + pvc/sonarqube-data to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,17 @@
-    # +apiVersion: v1
-    # +kind: PersistentVolumeClaim
-    # +metadata:
-    # +  annotations:
-    # +    managed-annotations.tailor.opendevstack.org: volume.beta.kubernetes.io/storage-provisioner
-    # +    volume.beta.kubernetes.io/storage-provisioner: ""
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube-data
-    # +spec:
-    # +  accessModes:
-    # +  - ReadWriteOnce
-    # +  resources:
-    # +    requests:
-    # +      storage: 2Gi
-    # +  storageClassName: ""
-    #  
-    # + pvc/sonarqube-extensions to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,17 @@
-    # +apiVersion: v1
-    # +kind: PersistentVolumeClaim
-    # +metadata:
-    # +  annotations:
-    # +    managed-annotations.tailor.opendevstack.org: volume.beta.kubernetes.io/storage-provisioner
-    # +    volume.beta.kubernetes.io/storage-provisioner: ""
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube-extensions
-    # +spec:
-    # +  accessModes:
-    # +  - ReadWriteOnce
-    # +  resources:
-    # +    requests:
-    # +      storage: 1Gi
-    # +  storageClassName: ""
-    #  
-    # + is/sonarqube to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,12 @@
-    # +apiVersion: image.openshift.io/v1
-    # +kind: ImageStream
-    # +metadata:
-    # +  annotations: {}
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube
-    # +spec:
-    # +  dockerImageRepository: sonarqube
-    # +  lookupPolicy:
-    # +    local: false
-    #  
-    # + bc/sonarqube to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,31 @@
-    # +apiVersion: build.openshift.io/v1
-    # +kind: BuildConfig
-    # +metadata:
-    # +  annotations: {}
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube
-    # +spec:
-    # +  failedBuildsHistoryLimit: 5
-    # +  nodeSelector: null
-    # +  output:
-    # +    to:
-    # +      kind: ImageStreamTag
-    # +      name: sonarqube:latest
-    # +  postCommit: {}
-    # +  resources: {}
-    # +  runPolicy: Serial
-    # +  source:
-    # +    contextDir: sonarqube
-    # +    git:
-    # +      ref: production
-    # +      uri: http://192.168.56.31:7990/scm/opendevstack/ods-core.git
-    # +    sourceSecret:
-    # +      name: cd-user-token
-    # +    type: Git
-    # +  strategy:
-    # +    dockerStrategy: {}
-    # +    type: Docker
-    # +  successfulBuildsHistoryLimit: 5
-    # +  triggers: []
-    #  
-    # + dc/sonarqube-postgresql to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,104 @@
-    # +apiVersion: apps.openshift.io/v1
-    # +kind: DeploymentConfig
-    # +metadata:
-    # +  annotations:
-    # +    managed-annotations.tailor.opendevstack.org: template.alpha.openshift.io/wait-for-ready
-    # +    original-values.tailor.io/spec.template.spec.containers.0.image: registry.access.redhat.com/rhscl/postgresql-95-rhel7@sha256:de66da4812f0de42cee0bef65899d75f8b1a7440858271f133c8f73c80be663d
-    # +    template.alpha.openshift.io/wait-for-ready: "true"
-    # +  labels:
-    # +    app: sonarqube
-    # +    template: postgresql-persistent-template
-    # +  name: sonarqube-postgresql
-    # +spec:
-    # +  replicas: 1
-    # +  selector:
-    # +    name: sonarqube-postgresql
-    # +  strategy:
-    # +    activeDeadlineSeconds: 21600
-    # +    recreateParams:
-    # +      timeoutSeconds: 600
-    # +    resources: {}
-    # +    type: Recreate
-    # +  template:
-    # +    metadata:
-    # +      annotations: {}
-    # +      labels:
-    # +        name: sonarqube-postgresql
-    # +    spec:
-    # +      containers:
-    # +      - env:
-    # +        - name: POSTGRESQL_USER
-    # +          valueFrom:
-    # +            configMapKeyRef:
-    # +              key: database-user
-    # +              name: sonarqube
-    # +        - name: POSTGRESQL_PASSWORD
-    # +          valueFrom:
-    # +            secretKeyRef:
-    # +              key: database-password
-    # +              name: sonarqube-postgresql
-    # +        - name: POSTGRESQL_DATABASE
-    # +          valueFrom:
-    # +            configMapKeyRef:
-    # +              key: database-name
-    # +              name: sonarqube
-    # +        image: registry.access.redhat.com/rhscl/postgresql-95-rhel7@sha256:de66da4812f0de42cee0bef65899d75f8b1a7440858271f133c8f73c80be663d
-    # +        imagePullPolicy: IfNotPresent
-    # +        livenessProbe:
-    # +          failureThreshold: 3
-    # +          initialDelaySeconds: 30
-    # +          periodSeconds: 10
-    # +          successThreshold: 1
-    # +          tcpSocket:
-    # +            port: 5432
-    # +          timeoutSeconds: 1
-    # +        name: postgresql
-    # +        ports:
-    # +        - containerPort: 5432
-    # +          protocol: TCP
-    # +        readinessProbe:
-    # +          exec:
-    # +            command:
-    # +            - /bin/sh
-    # +            - -i
-    # +            - -c
-    # +            - psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE -c
-    # +              'SELECT 1'
-    # +          failureThreshold: 3
-    # +          initialDelaySeconds: 5
-    # +          periodSeconds: 10
-    # +          successThreshold: 1
-    # +          timeoutSeconds: 1
-    # +        resources:
-    # +          limits:
-    # +            memory: 512Mi
-    # +        securityContext:
-    # +          capabilities: {}
-    # +          privileged: false
-    # +        terminationMessagePath: /dev/termination-log
-    # +        terminationMessagePolicy: File
-    # +        volumeMounts:
-    # +        - mountPath: /var/lib/pgsql/data
-    # +          name: sonarqube-postgresql-data
-    # +      dnsPolicy: ClusterFirst
-    # +      restartPolicy: Always
-    # +      schedulerName: default-scheduler
-    # +      securityContext: {}
-    # +      terminationGracePeriodSeconds: 30
-    # +      volumes:
-    # +      - name: sonarqube-postgresql-data
-    # +        persistentVolumeClaim:
-    # +          claimName: sonarqube-postgresql
-    # +  test: false
-    # +  triggers:
-    # +  - imageChangeParams:
-    # +      automatic: true
-    # +      containerNames:
-    # +      - postgresql
-    # +      from:
-    # +        kind: ImageStreamTag
-    # +        name: postgresql:9.5
-    # +        namespace: openshift
-    # +    type: ImageChange
-    # +  - type: ConfigChange
-    #  
-    # + dc/sonarqube to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,97 @@
-    # +apiVersion: apps.openshift.io/v1
-    # +kind: DeploymentConfig
-    # +metadata:
-    # +  annotations:
-    # +    original-values.tailor.io/spec.template.spec.containers.0.image: cd/sonarqube:latest
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube
-    # +spec:
-    # +  replicas: 1
-    # +  selector:
-    # +    app: sonarqube
-    # +    deploymentconfig: sonarqube
-    # +  strategy:
-    # +    activeDeadlineSeconds: 21600
-    # +    recreateParams:
-    # +      timeoutSeconds: 600
-    # +    resources: {}
-    # +    type: Recreate
-    # +  template:
-    # +    metadata:
-    # +      annotations: {}
-    # +      labels:
-    # +        app: sonarqube
-    # +        deploymentconfig: sonarqube
-    # +    spec:
-    # +      containers:
-    # +      - env:
-    # +        - name: SONARQUBE_JDBC_URL
-    # +          valueFrom:
-    # +            configMapKeyRef:
-    # +              key: database-jdbc-url
-    # +              name: sonarqube
-    # +        - name: SONARQUBE_JDBC_USERNAME
-    # +          valueFrom:
-    # +            configMapKeyRef:
-    # +              key: database-user
-    # +              name: sonarqube
-    # +        - name: SONARQUBE_JDBC_PASSWORD
-    # +          valueFrom:
-    # +            secretKeyRef:
-    # +              key: database-password
-    # +              name: sonarqube-postgresql
-    # +        - name: SONARQUBE_CROWD_URL
-    # +          valueFrom:
-    # +            configMapKeyRef:
-    # +              key: crowd-url
-    # +              name: sonarqube
-    # +        - name: SONARQUBE_CROWD_APP
-    # +          valueFrom:
-    # +            configMapKeyRef:
-    # +              key: crowd-application
-    # +              name: sonarqube
-    # +        - name: SONARQUBE_CROWD_PWD
-    # +          valueFrom:
-    # +            secretKeyRef:
-    # +              key: crowd-password
-    # +              name: sonarqube-app
-    # +        image: cd/sonarqube:latest
-    # +        imagePullPolicy: Always
-    # +        name: sonarqube
-    # +        ports:
-    # +        - containerPort: 9000
-    # +          protocol: TCP
-    # +        resources: {}
-    # +        terminationMessagePath: /dev/termination-log
-    # +        terminationMessagePolicy: File
-    # +        volumeMounts:
-    # +        - mountPath: /opt/sonarqube/data
-    # +          name: sonarqube-data
-    # +        - mountPath: /opt/sonarqube/extensions
-    # +          name: sonarqube-extensions
-    # +      dnsPolicy: ClusterFirst
-    # +      restartPolicy: Always
-    # +      schedulerName: default-scheduler
-    # +      securityContext: {}
-    # +      terminationGracePeriodSeconds: 30
-    # +      volumes:
-    # +      - name: sonarqube-data
-    # +        persistentVolumeClaim:
-    # +          claimName: sonarqube-data
-    # +      - name: sonarqube-extensions
-    # +        persistentVolumeClaim:
-    # +          claimName: sonarqube-extensions
-    # +  test: false
-    # +  triggers:
-    # +  - type: ConfigChange
-    # +  - imageChangeParams:
-    # +      automatic: true
-    # +      containerNames:
-    # +      - sonarqube
-    # +      from:
-    # +        kind: ImageStreamTag
-    # +        name: sonarqube:latest
-    # +        namespace: cd
-    # +    type: ImageChange
-    #  
-    # + svc/sonarqube-postgresql to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,21 @@
-    # +apiVersion: v1
-    # +kind: Service
-    # +metadata:
-    # +  annotations:
-    # +    managed-annotations.tailor.opendevstack.org: template.openshift.io/expose-uri
-    # +    template.openshift.io/expose-uri: postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}
-    # +  labels:
-    # +    app: sonarqube
-    # +    template: postgresql-persistent-template
-    # +  name: sonarqube-postgresql
-    # +spec:
-    # +  ports:
-    # +  - name: postgresql
-    # +    port: 5432
-    # +    protocol: TCP
-    # +    targetPort: 5432
-    # +  selector:
-    # +    name: sonarqube-postgresql
-    # +  sessionAffinity: None
-    # +  type: ClusterIP
-    #  
-    # + svc/sonarqube to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,18 @@
-    # +apiVersion: v1
-    # +kind: Service
-    # +metadata:
-    # +  annotations: {}
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube
-    # +spec:
-    # +  ports:
-    # +  - name: 9000-tcp
-    # +    port: 9000
-    # +    protocol: TCP
-    # +    targetPort: 9000
-    # +  selector:
-    # +    deploymentconfig: sonarqube
-    # +  sessionAffinity: None
-    # +  type: ClusterIP
-    #  
-    # + route/sonarqube to create
-    # --- Current State (OpenShift cluster)
-    # +++ Desired State (Processed template)
-    # @@ -1 +1,20 @@
-    # +apiVersion: route.openshift.io/v1
-    # +kind: Route
-    # +metadata:
-    # +  annotations: {}
-    # +  labels:
-    # +    app: sonarqube
-    # +  name: sonarqube
-    # +spec:
-    # +  host: sonarqube-cd.192.168.99.100.nip.io
-    # +  port:
-    # +    targetPort: 9000-tcp
-    # +  tls:
-    # +    insecureEdgeTerminationPolicy: Redirect
-    # +    termination: edge
-    # +  to:
-    # +    kind: Service
-    # +    name: sonarqube
-    # +    weight: 100
-    # +  wildcardPolicy: None
-    #  
-    # 
-    # Summary: 0 in sync, 13 to create, 0 to update, 0 to delete
-    # 
-    # Apply changes? [y/n]: y
-    # Creating ConfigMap sonarqube
-    # Applied processed ConfigMap template.
-    # Creating Secret sonarqube-app
-    # Applied processed Secret template.
-    # Creating Secret sonarqube-postgresql
-    # Applied processed Secret template.
-    # Creating PersistentVolumeClaim sonarqube-postgresql
-    # Applied processed PersistentVolumeClaim template.
-    # Creating PersistentVolumeClaim sonarqube-data
-    # Applied processed PersistentVolumeClaim template.
-    # Creating PersistentVolumeClaim sonarqube-extensions
-    # Applied processed PersistentVolumeClaim template.
-    # Creating ImageStream sonarqube
-    # Applied processed ImageStream template.
-    # Creating BuildConfig sonarqube
-    # Applied processed BuildConfig template.
-    # Creating DeploymentConfig sonarqube-postgresql
-    # Applied processed DeploymentConfig template.
-    # Creating DeploymentConfig sonarqube
-    # Applied processed DeploymentConfig template.
-    # Creating Service sonarqube-postgresql
-    # Applied processed Service template.
-    # Creating Service sonarqube
-    # Applied processed Service template.
-    # Creating Route sonarqube
-    # Applied processed Route template.
-
 After the installation has taken place, you will have to build sonarqube:
 
     oc start-build -n cd sonarqube
@@ -7352,14 +6874,14 @@ sonarqube-auth-token with the just generated token in base64 coding.
     # ODJjNmNlMjJkZjc5NjYyYjI1YWI2MDQwODNlMGZjOWNhZGJlZThjNQ==
 
 
-<a id="org28d8679"></a>
+<a id="orgb390bf7"></a>
 
 ## TODO Explain all variables
 
 Check out the **cd** project
 
 
-<a id="orge07dae1"></a>
+<a id="orgaf58cca"></a>
 
 ## Prepare CD project for Jenkins
 
@@ -7515,7 +7037,7 @@ You can **optionally** start the jenkins-master build using
     oc start-build -n cd jenkins-master
 
 
-<a id="org996ad8b"></a>
+<a id="org78081ad"></a>
 
 ## TODO Prepare Jenkins slave docker images
 
@@ -7526,7 +7048,7 @@ images. These slave images are located in the project
 <https://github.com/opendevstack/>????
 
 
-<a id="orgcf5c9d6"></a>
+<a id="orgab20e67"></a>
 
 ### Maven
 
@@ -7615,7 +7137,7 @@ and start the build
 Repeat for every project type you require.
 
 
-<a id="orgc6155a2"></a>
+<a id="org9b6ff1c"></a>
 
 ### Python
 
@@ -7699,7 +7221,7 @@ Repeat for every project type you require.
     error: build error: The command '/bin/sh -c rm -rf Python-${Python_VERSION}     && yum remove -y $INSTALL_PKGS     && ln -s /Python-${PYTHON_VERSION}/python /usr/local/sbin/python3     && python3 -V' returned a non-zero code: 127
 
 
-<a id="org3829011"></a>
+<a id="orgd0b33bc"></a>
 
 ### scala
 
@@ -7818,7 +7340,7 @@ Repeat for every project type you require.
     error: build error: The command '/bin/sh -c cat $HOME/.sbt/repositories | sed -e "s|NEXUS_HOST|$NEXUS_HOST|g" > $HOME/.sbt/repositories.tmp &&     mv $HOME/.sbt/repositories.tmp $HOME/.sbt/repositories  &&     NEXUS_SHORT=$(echo $NEXUS_HOST | sed -e "s|https://||g" | sed -e "s|http://||g") &&     sed -i.bak -e "s|NEXUS_HOST|$NEXUS_SHORT|g" $HOME/.sbt/credentials &&     sed -i.bak -e "s|NEXUS_USERNAME|$NEXUS_USERNAME|g" $HOME/.sbt/credentials &&     sed -i.bak -e "s|NEXUS_PASSWORD|$NEXUS_PASSWORD|g" $HOME/.sbt/credentials &&     rm $HOME/.sbt/credentials.bak &&     cd /tmp/scala &&     . /tmp/set_java_proxy.sh &&     export SBT_OPTS=$JAVA_OPTS" -Duser.home=/home/jenkins" &&     if [[ $HTTP_PROXY != "" ]]; then echo "HTTPS proxy set - SBT bug - remove nexus repos"; rm $HOME/.sbt/repositories; rm /usr/share/sbt/conf/sbtopts; rm /usr/share/sbt-launcher-packaging/conf/sbtopts; fi &&     sbt -v run && echo "c" &&     rm -rf target' returned a non-zero code: 1
 
 
-<a id="org99aaf00"></a>
+<a id="orgf6f5244"></a>
 
 ### nodejs8-angular
 
@@ -7917,7 +7439,7 @@ Repeat for every project type you require.
     error: build error: The command '/bin/sh -c sed -i "s|NEXUS_HOST|$NEXUS_HOST|g" $HOME/.npm-global/etc/npmrc &&     sed -i "s|NEXUS_AUTH|$(echo -n $NEXUS_AUTH | base64)|g" $HOME/.npm-global/etc/npmrc &&     npm config set ca=null &&     npm config set strict-ssl=false &&     npm install -g @angular/cli@1.6.5 --unsafe-perm=true --allow-root &&     npm install -g cypress@2.1.0 --unsafe-perm=true --allow-root > /dev/null &&     npm --version &&     ng version &&     cypress verify' returned a non-zero code: 1
 
 
-<a id="org1690329"></a>
+<a id="org2ec5c48"></a>
 
 ## Prepare Docker Registry
 
@@ -8071,7 +7593,7 @@ already installed on your system
     # Get https://docker-registry-default.192.168.99.100.nip.io:443/v1/_ping: x509: certificate signed by unknown authority
 
 
-<a id="org7693016"></a>
+<a id="orgf6d58b0"></a>
 
 ## Prepare Rundeck and required Dockerfiles
 
@@ -8082,7 +7604,7 @@ configuration.
 <http://192.168.56.31:4440/rundeck>
 
 
-<a id="org372111d"></a>
+<a id="orgcaefe4a"></a>
 
 ### DONE Create Quickstarters project
 
@@ -8090,7 +7612,7 @@ Create a project named **Quickstarters**. The project doesn’t need any additio
 information, so leave all other options blank.
 
 
-<a id="orgbfd757a"></a>
+<a id="org02e4964"></a>
 
 ### TODO Openshift API token
 
@@ -8117,7 +7639,7 @@ You can reference this stored Key using the storage path: **keys/openshift-api-t
 **Save** the key.
 
 
-<a id="org5ca3d7d"></a>
+<a id="orga1948f3"></a>
 
 ### DONE CD user private key
 
@@ -8168,12 +7690,12 @@ You can reference this stored Key using the storage path: **keys/id\_rsa\_bitbuc
 **Save** the key.
 
 
-<a id="org4419f43"></a>
+<a id="orgefd0168"></a>
 
 ### DONE Configure SCM plugins
 
 
-<a id="orgbb584b1"></a>
+<a id="org64378b7"></a>
 
 #### Create **rundeck-changes** branch
 
@@ -8223,7 +7745,7 @@ and go to the **SCM** section. This section is available as soon as you are in t
 project configuration for the **Quickstarters** project.
 
 
-<a id="orge286a73"></a>
+<a id="org36fcf54"></a>
 
 #### Setup Import plugin
 
@@ -8268,7 +7790,7 @@ Uper right corner -> Job Actions -> Import Remote Changes
 Click on **Import**
 
 
-<a id="org2af81db"></a>
+<a id="org6479e41"></a>
 
 #### Setup Export plugin
 
@@ -8278,7 +7800,7 @@ import plugin, except the **file path template** - set to
 **rundeck-jobs/\({job.group}\){job.name}.${config.format}**
 
 
-<a id="org4b1303d"></a>
+<a id="org2ee259d"></a>
 
 ### TODO Update the job properties
 
@@ -8312,7 +7834,7 @@ So it should look like the following:
 Click **Save**
 
 
-<a id="orgca8d295"></a>
+<a id="orgf940560"></a>
 
 ### TODO Run the job **verify global rundeck Settings**
 
@@ -8321,7 +7843,7 @@ Jobs -> **verify global rundeck settings**
 Click on **Run Job Now**
 
 
-<a id="org12850eb"></a>
+<a id="org8abd84b"></a>
 
 ## Add shared images
 
@@ -8342,7 +7864,7 @@ and start the build
     oc start-build -n shared-services nginx-authproxy
 
 
-<a id="org4ca98d8"></a>
+<a id="orga0246a9"></a>
 
 ## Configure provisioning application
 
@@ -8379,7 +7901,7 @@ After startup via the IDE the application is available at
 You can login in with the Crowd admin user you set up earlier.
 
 
-<a id="org3defdd3"></a>
+<a id="org6ea9e6f"></a>
 
 ## Setup within Openshift
 
@@ -8392,7 +7914,7 @@ Create 3 openshift projects
 The following steps have to be done on your local machine:
 
 
-<a id="org430b742"></a>
+<a id="orgac0ed81"></a>
 
 ### Login
 
@@ -8438,7 +7960,7 @@ The following steps have to be done on your local machine:
     # openshift-web-console                                   Active
 
 
-<a id="org4871d6c"></a>
+<a id="org881fc46"></a>
 
 ### Create projects
 
@@ -8520,12 +8042,12 @@ The following steps have to be done on your local machine:
     # prov-test                                               Active
 
 
-<a id="org84cd5e2"></a>
+<a id="orgbd8b4bf"></a>
 
 ### Run tailor
 
 
-<a id="org95e28ab"></a>
+<a id="org2605788"></a>
 
 #### prov-cd
 
@@ -8969,7 +8491,7 @@ and change
     # Error from server (AlreadyExists): error when creating ".PROCESSED_TEMPLATE": deploymentconfigs.apps.openshift.io "jenkins" already exists
 
 
-<a id="orgc3df8e5"></a>
+<a id="org53b7221"></a>
 
 #### prov-test
 
@@ -9341,7 +8863,7 @@ add the line
     # Applied processed Route template.
 
 
-<a id="org88ae42a"></a>
+<a id="orgffc72be"></a>
 
 #### prov-dev
 
@@ -9716,12 +9238,12 @@ add the line
     # Applied processed Route template.
 
 
-<a id="org456afa9"></a>
+<a id="org848fec1"></a>
 
 ### TODO Go to openshift console
 
 
-<a id="org8f7cda9"></a>
+<a id="org8a5c608"></a>
 
 #### Add Service Accounts with **edit** rights
 
@@ -9746,7 +9268,7 @@ jenkins build.
 For the runtime projects (**prov-test** and **prov-dev**) run **tailor update**
 
 
-<a id="org13a0a52"></a>
+<a id="org529a9d5"></a>
 
 #### Run tailor
 
@@ -9881,7 +9403,7 @@ For the runtime projects (**prov-test** and **prov-dev**) run **tailor update**
         # Patch DeploymentConfig prov-app
 
 
-<a id="orgea6f5a4"></a>
+<a id="orge5dc7d4"></a>
 
 #### Last step
 
@@ -9959,7 +9481,7 @@ timeout - run
 in **prov-dev** and **prov-test** projects
 
 
-<a id="org4b52858"></a>
+<a id="org7ea5e9f"></a>
 
 ## Try out the OpenDevStack
 
@@ -9970,7 +9492,7 @@ login with your crowd credentials.
 Provision your first project and have a look at **OpenShift**.
 
 
-<a id="org5bac180"></a>
+<a id="org9b4badc"></a>
 
 # Console URLs
 
@@ -10139,17 +9661,17 @@ Provision your first project and have a look at **OpenShift**.
 </table>
 
 
-<a id="orgb1edd8f"></a>
+<a id="orgaca71f2"></a>
 
 # OpenDevStack - Products and Description
 
 
-<a id="org4119fee"></a>
+<a id="org2eb1955"></a>
 
 ## Crowd
 
 
-<a id="org5a03111"></a>
+<a id="orgad22ade"></a>
 
 ### Centralized identity management
 
@@ -10158,7 +9680,7 @@ Microsoft Azure AD - and control application authentication permissions in one
 single location.
 
 
-<a id="orgd0cdc67"></a>
+<a id="org1696de1"></a>
 
 #### Single sign-on (SSO)
 
@@ -10168,7 +9690,7 @@ Atlassian products - like Jira, Confluence, and Bitbucket- to give your users
 one simple single sign-on (SSO) experience.
 
 
-<a id="org9db30a5"></a>
+<a id="orga14e836"></a>
 
 #### Centralize multiple directories
 
@@ -10179,17 +9701,17 @@ Microsoft Azure AD, Novell eDirectory, and more. You can even create your own
 custom connector.
 
 
-<a id="org36d499e"></a>
+<a id="orga36e945"></a>
 
 ## Confluence
 
 
-<a id="org87c7654"></a>
+<a id="org9b0e2bd"></a>
 
 ### Content collaboration software that changes how modern teams work
 
 
-<a id="org0040561"></a>
+<a id="orgb607d71"></a>
 
 #### Project collaboration
 
@@ -10199,7 +9721,7 @@ Create, share, and collaborate on projects all in one place to keep your
 projects moving forward, faster.
 
 
-<a id="orgffe13ea"></a>
+<a id="orgadd1a84"></a>
 
 #### Knowledge base
 
@@ -10209,7 +9731,7 @@ Easily publish, organize, and access company information in one central location
 so you can help your customers help themselves.
 
 
-<a id="org2634fbd"></a>
+<a id="org813be1e"></a>
 
 #### Team documentation
 
@@ -10219,7 +9741,7 @@ Capture, store, and grow your team's knowledge so you can stay up to date and on
 the same page - literally.
 
 
-<a id="org2f26f25"></a>
+<a id="org991300e"></a>
 
 #### Document management
 
@@ -10228,7 +9750,7 @@ instant previews, full-text search, and pinned comments make it easy to manage
 your files.
 
 
-<a id="org345f629"></a>
+<a id="orga988a0f"></a>
 
 #### Page and file versioning
 
@@ -10236,7 +9758,7 @@ Track every version and change that you and your teammates make to a page. Files
 are automatically versioned as well!
 
 
-<a id="orgc78b48b"></a>
+<a id="orga37f16f"></a>
 
 #### Templates
 
@@ -10244,7 +9766,7 @@ We include best practice templates to help you get started with popular pages,
 so you don't have to fuss with formatting.
 
 
-<a id="orgb19278f"></a>
+<a id="org7048bd2"></a>
 
 #### Permissions
 
@@ -10252,7 +9774,7 @@ Keep your site and your content secure with granular permissions that give you
 complete control.
 
 
-<a id="org249aa25"></a>
+<a id="org0d91b92"></a>
 
 #### Jira
 
@@ -10260,17 +9782,17 @@ Connect to Jira to provide insight into your development work with automatic
 linking, quick issue creation and reports in Confluence.
 
 
-<a id="orgf616208"></a>
+<a id="org704eb69"></a>
 
 ## Jira
 
 
-<a id="org89ae8ff"></a>
+<a id="org1bec26c"></a>
 
 ### Project management tool for agile teams
 
 
-<a id="org8881f9e"></a>
+<a id="orgcd1bee7"></a>
 
 #### Scrum boards
 
@@ -10278,7 +9800,7 @@ Agile teams can stay focused on delivering iterative and incremental value, as
 fast as possible, with customizable scrum boards.
 
 
-<a id="orga87c53f"></a>
+<a id="orgdcebe4f"></a>
 
 #### Kanban boards
 
@@ -10286,7 +9808,7 @@ Flexible kanban boards give your team full visibility into what’s next so you
 can continuously deliver maximum output in minimal cycle time.
 
 
-<a id="orgcc4c5ff"></a>
+<a id="org2d181cd"></a>
 
 #### Agile reporting
 
@@ -10294,7 +9816,7 @@ Teams have access to more than a dozen out-of-the-box reports with real-time,
 actionable insights into how their team is performing sprint over sprint.
 
 
-<a id="org3c1111d"></a>
+<a id="org4a52b65"></a>
 
 #### Roadmaps
 
@@ -10302,35 +9824,35 @@ Sketch out the big picture, communicate plans with stakeholders, and ensure your
 roadmap connects to your team's work - all in a few clicks.
 
 
-<a id="orgdb708f9"></a>
+<a id="org8254b56"></a>
 
 #### Customizable workflows
 
 Create customizable workflows that map to any style of work.
 
 
-<a id="orgf6e4adc"></a>
+<a id="orgfdc8253"></a>
 
 #### Developer tool integrations
 
 Integrate with developer tools for end-to-end traceability.
 
 
-<a id="org2b4aa6b"></a>
+<a id="org3861936"></a>
 
 #### Custom filters
 
 Create customer filters using Jira Query Language (JQL).
 
 
-<a id="orge3b56ce"></a>
+<a id="org3f0fa73"></a>
 
 #### Rich APIs
 
 Automate processes with Jira’s robust set of APIs.
 
 
-<a id="orgafc2aee"></a>
+<a id="org4eb522e"></a>
 
 ## Jira and Confluence
 
@@ -10339,12 +9861,12 @@ Jira issues and software documentation in Confluence. Quick issue creation and
 reports let your team work smarter and faster.
 
 
-<a id="orgb71c5bc"></a>
+<a id="org8e18525"></a>
 
 ## BitBucket
 
 
-<a id="orgf45133d"></a>
+<a id="org428c8d4"></a>
 
 ### More than just Git code management
 
@@ -10352,7 +9874,7 @@ Bitbucket gives teams one place to plan projects, collaborate on code, test, and
 deploy.
 
 
-<a id="orgc6ff037"></a>
+<a id="org6d19416"></a>
 
 #### Free unlimited private repositories
 
@@ -10360,7 +9882,7 @@ Free for small teams under 5 and priced to scale with Standard ($2/user/mo) or
 Premium ($5/user/mo) plans.
 
 
-<a id="orgf292281"></a>
+<a id="org0abfa44"></a>
 
 #### Best-in-class Jira & Trello integration
 
@@ -10368,7 +9890,7 @@ Keep your projects organized by creating Bitbucket branches right from Jira
 issues or Trello cards.
 
 
-<a id="org52cda13"></a>
+<a id="org34dac56"></a>
 
 #### Built-in Continuous Delivery
 
@@ -10376,7 +9898,7 @@ Build, test and deploy with integrated CI/CD. Benefit from configuration as code
 and fast feedback loops.
 
 
-<a id="org5b0c794"></a>
+<a id="orgce338af"></a>
 
 #### Code Collaboration
 
@@ -10387,7 +9909,7 @@ checklist with designated approvers and hold discussions right in the source
 code with inline comments.
 
 
-<a id="org009fee7"></a>
+<a id="orga80e18e"></a>
 
 #### Continuous Delivery
 
@@ -10397,7 +9919,7 @@ Bitbucket Pipelines with Deployments lets you build, test and deploy with
 integrated CI/CD. Benefit from configuration as code and fast feedback loops.
 
 
-<a id="orgd64ffa5"></a>
+<a id="org864c400"></a>
 
 #### Security
 
@@ -10408,47 +9930,47 @@ verification. Restrict access to certain users, and control their actions with
 branch permissions and merge checks for quality code.
 
 
-<a id="org572c236"></a>
+<a id="org7850cec"></a>
 
 ## Rundeck
 
 
-<a id="orga820ed9"></a>
+<a id="org7fe88d3"></a>
 
 ### Manage automation from legacy to cloud services
 
 Leverage any scripting languages or tools you want to use.
 
 
-<a id="org23c6d49"></a>
+<a id="org40decc4"></a>
 
 #### Scale Ops.
 
 Increase productivity. Implement self-service.
 
 
-<a id="orgaf267f1"></a>
+<a id="org749934b"></a>
 
 #### Eliminate the wait.
 
 Reduce ticket queues. Improve response times.
 
 
-<a id="orgda6b660"></a>
+<a id="org758e3e8"></a>
 
 #### Stay in control.
 
 Oversee everything. Delegate anything.
 
 
-<a id="org41be34f"></a>
+<a id="orge112b69"></a>
 
 #### Be audit-ready.
 
 Validate compliance. Log all Ops activity.
 
 
-<a id="org7ecaec0"></a>
+<a id="orge4313df"></a>
 
 #### Create a job
 
@@ -10457,7 +9979,7 @@ scripts, or tools on any number of local or remote nodes. Jobs can be triggered
 by the scheduler or on-demand via the web interface or API.
 
 
-<a id="org1451309"></a>
+<a id="org65a3eb0"></a>
 
 #### Safely hand off the job to others
 
@@ -10467,7 +9989,7 @@ repeatable and auditable actions. You can also let users to run ad-hoc commands
 (if your security policies allow it).
 
 
-<a id="org077e480"></a>
+<a id="orge677a8d"></a>
 
 #### Enjoy being the Hero.
 
@@ -10477,17 +9999,17 @@ less of your time fielding repetitive requests and more of your time doing new
 and interesting things that will further the business.
 
 
-<a id="orgee2cb8b"></a>
+<a id="orgb2fa14a"></a>
 
 ## Nexus Repository
 
 
-<a id="orgfa1665e"></a>
+<a id="org33c8b03"></a>
 
 ### Flow control for binaries, build artifacts, and release candidates.
 
 
-<a id="org909db15"></a>
+<a id="orgfd10ef3"></a>
 
 #### The perfect system of record for all your software parts
 
@@ -10498,7 +10020,7 @@ and interesting things that will further the business.
 -   Sleep comfortably with world-class support and training.
 
 
-<a id="org4507b8b"></a>
+<a id="orge5a4aad"></a>
 
 #### Universal support for all your favorite formats and tools.
 
@@ -10508,17 +10030,17 @@ and interesting things that will further the business.
 -   Integrated with popular tools like Eclipse, IntelliJ, Hudson, Jenkins, Puppet, Chef, Docker, and more.
 
 
-<a id="org153c8ad"></a>
+<a id="org6267e77"></a>
 
 ## SonarQube
 
 
-<a id="org46a22dd"></a>
+<a id="orgc1ebc00"></a>
 
 ### Continuous Code Quality
 
 
-<a id="orgec13fd9"></a>
+<a id="org360af21"></a>
 
 #### Continuous Inspection
 
@@ -10527,7 +10049,7 @@ also to highlight issues newly introduced. With a Quality Gate in place, you can
 fix the leak and therefore improve code quality systematically.
 
 
-<a id="org29c12eb"></a>
+<a id="org6c484c8"></a>
 
 #### Detect Tricky Issues
 
@@ -10536,7 +10058,7 @@ detect tricky issues such as null-pointers dereferences, logic errors, resource
 leaks&#x2026;
 
 
-<a id="org36facec"></a>
+<a id="orgb330856"></a>
 
 #### Centralize Quality
 
@@ -10545,7 +10067,7 @@ managers and executives in charge of a few to a few thousands projects and also
 to act as a toll gate for application promotion or release.
 
 
-<a id="org195f818"></a>
+<a id="orgf49a63e"></a>
 
 #### DevOps Integration
 
@@ -10553,12 +10075,12 @@ SonarQube integrates with the entire DevOps toolchain including build systems,
 CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive RestAPI.
 
 
-<a id="org12cd3f2"></a>
+<a id="org66856db"></a>
 
 # Install convenience environment
 
 
-<a id="org53ddf7d"></a>
+<a id="org183d019"></a>
 
 ## atlassian1
 
@@ -10777,7 +10299,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     xterm &
 
 
-<a id="org5bbf725"></a>
+<a id="orgda56ba5"></a>
 
 ## atlcon
 
@@ -10995,17 +10517,17 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     xterm &
 
 
-<a id="orgedf3b0e"></a>
+<a id="orgda83c65"></a>
 
 # Installation and Runtime Topology
 
 
-<a id="org281c18a"></a>
+<a id="org63ec6e8"></a>
 
 ## Atlassian products
 
 
-<a id="org8bd9ebb"></a>
+<a id="org8863322"></a>
 
 ### Installation directory (/opt/atlassian)
 
@@ -11124,7 +10646,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # -rw-r--r--.  1 root root 178523922 Nov 16 11:16 atlassian-crowd-2.11.2.tar.gz
 
 
-<a id="org1ca7672"></a>
+<a id="org2ce745e"></a>
 
 ### Crowd
 
@@ -11574,7 +11096,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # 53 directories, 335 files
 
 
-<a id="org8a42d34"></a>
+<a id="orgdaffaad"></a>
 
 ### Confluence
 
@@ -11641,7 +11163,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     sudo tree -L 2 /opt/atlassian/atlassian-crowd-2.11.2
 
 
-<a id="org50b5f2b"></a>
+<a id="org74f1d64"></a>
 
 ### Jira
 
@@ -11674,7 +11196,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     sudo tree -L 2 /opt/atlassian/atlassian-crowd-2.11.2
 
 
-<a id="orga636e80"></a>
+<a id="orgcfaeb8d"></a>
 
 ### BitBucket
 
@@ -11755,12 +11277,12 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     sudo tree -L 2 /opt/atlassian/atlassian-crowd-2.11.2
 
 
-<a id="orga1b92ef"></a>
+<a id="org9631c13"></a>
 
 ### Home directory structure (/srv/atlassian)
 
 
-<a id="org179332f"></a>
+<a id="org36f30a6"></a>
 
 #### Atlassian products
 
@@ -11829,7 +11351,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # 44 directories, 6 files
 
 
-<a id="org188d32f"></a>
+<a id="orgb1701bc"></a>
 
 #### Crowd
 
@@ -11873,7 +11395,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # </application-configuration>
 
 
-<a id="org030d449"></a>
+<a id="orgefde6a2"></a>
 
 #### Confluence
 
@@ -11904,7 +11426,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # </application-configuration>
 
 
-<a id="orgef55610"></a>
+<a id="org54706cb"></a>
 
 #### Jira
 
@@ -11937,7 +11459,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # </jira-database-config>
 
 
-<a id="org8172df0"></a>
+<a id="org43885dd"></a>
 
 #### BitBucket
 
@@ -11965,7 +11487,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # plugin.auth-crowd.sso.enabled=true
 
 
-<a id="org6571070"></a>
+<a id="org2db35a0"></a>
 
 ### User home directories
 
@@ -11978,7 +11500,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # drwx------. 3 atlbitbucket atlbitbucket  78 Nov 16 12:17 atlbitbucket
 
 
-<a id="org96213c4"></a>
+<a id="org46456e4"></a>
 
 ## Rundeck
 
@@ -12193,7 +11715,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # rundeck   2009  2005  0 Nov18 ?        00:03:40 java -Djava.security.auth.login.config=/etc/rundeck/jaas-crowd.conf -Dloginmodule.name=crowd -Drdeck.config=/etc/rundeck -Drundeck.server.configDir=/etc/rundeck -Dserver.datastore.path=/var/lib/rundeck/data/rundeck -Drundeck.server.serverDir=/var/lib/rundeck -Drdeck.projects=/var/lib/rundeck/projects -Drdeck.runlogs=/var/lib/rundeck/logs -Drundeck.config.location=/etc/rundeck/rundeck-config.properties -Djava.io.tmpdir=/tmp/rundeck -Drundeck.server.workDir=/tmp/rundeck -Dserver.http.port=4440 -Xmx1024m -Xms256m -XX:MaxMetaspaceSize=256m -server -Dserver.web.context=/rundeck -cp /var/lib/rundeck/bootstrap/javax.servlet-3.0.0.v201112011016.jar:/var/lib/rundeck/bootstrap/jetty-all-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jetty-http-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jetty-io-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jetty-jaas-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jetty-security-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jetty-server-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jetty-util-9.0.7.v20131107.jar:/var/lib/rundeck/bootstrap/jna-3.2.2.jar:/var/lib/rundeck/bootstrap/libpam4j-1.5.jar:/var/lib/rundeck/bootstrap/log4j-1.2.16.jar:/var/lib/rundeck/bootstrap/not-yet-commons-ssl-0.3.11.jar:/var/lib/rundeck/bootstrap/rundeck-jetty-server-2.8.2.jar:/var/lib/rundeck/bootstrap/commons-codec-1.2.jar:/var/lib/rundeck/bootstrap/commons-httpclient-3.1.jar:/var/lib/rundeck/bootstrap/commons-logging-1.1.1.jar:/var/lib/rundeck/bootstrap/jaas-jetty-crowd-1.0.jar:/var/lib/rundeck/bootstrap/jersey-apache-client-1.19.3.jar:/var/lib/rundeck/bootstrap/jersey-client-1.19.3.jar:/var/lib/rundeck/bootstrap/jersey-core-1.19.3.jar:/var/lib/rundeck/bootstrap/jsr311-api-1.1.1.jar:/var/lib/rundeck/bootstrap/slf4j-api-1.7.5.jar:/var/lib/rundeck/bootstrap/slf4j-simple-1.7.5.jar com.dtolabs.rundeck.RunServer /var/lib/rundeck
 
 
-<a id="org3868f65"></a>
+<a id="orge01a2e7"></a>
 
 ## Docker
 
@@ -12217,22 +11739,22 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # drwx------. 3 root root 20 Nov 18 07:44 containerd
 
 
-<a id="org45be9ca"></a>
+<a id="orgf6c9a52"></a>
 
 ### Nexus3
 
 
-<a id="orga34add7"></a>
+<a id="orgb31fa21"></a>
 
 ### SonarQube
 
 
-<a id="org06d606e"></a>
+<a id="org4c70b5d"></a>
 
 #### SonarQube-PostGreSQL
 
 
-<a id="org2d0e5de"></a>
+<a id="orgf3ce42b"></a>
 
 ## PostGreSQL
 
@@ -12280,7 +11802,7 @@ CI engines, promotion pipelines&#x2026; using webhooks and its comprehensive Res
     # 20 directories, 8 files
 
 
-<a id="org1c443c9"></a>
+<a id="org5294214"></a>
 
 ## Processes
 
@@ -12329,12 +11851,12 @@ just restart the jira service
     # jira.service                                                                             loaded active running   (null)
 
 
-<a id="org4725769"></a>
+<a id="orgdeece8e"></a>
 
 # ToDo
 
 
-<a id="org8dce230"></a>
+<a id="orgd03ccc0"></a>
 
 ## Configuring Minishift
 
@@ -12343,7 +11865,7 @@ just restart the jira service
     cd /misc/vagrant/opendevstack/.minishift
 
 
-<a id="orgdc67153"></a>
+<a id="org6d2e638"></a>
 
 ## Using Minishift - An OpenShift Origin All-in-One VM
 
@@ -12446,7 +11968,7 @@ we make sure that the file **minishift\_kubeconfig** exists.
     _EOF
 
 
-<a id="orgef85518"></a>
+<a id="org8b901a2"></a>
 
 ## Problems when starting
 
@@ -12519,7 +12041,7 @@ we make sure that the file **minishift\_kubeconfig** exists.
     # Cluster stopped.
 
 
-<a id="orgb996ebd"></a>
+<a id="org0252ab9"></a>
 
 ## tj
 

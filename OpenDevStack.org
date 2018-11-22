@@ -5816,17 +5816,31 @@ After this step you will have to create the following repositories in the
 
 Administation->Repository->Repositories
 
-| Format | Type   | Name                  | Online  | Version policy | Layout policy | Storage          | Strict Content Type Validation | Deployment policy  | Remote Storage                                                     | belongs to group        |
-|--------+--------+-----------------------+---------+----------------+---------------+------------------+--------------------------------+--------------------+--------------------------------------------------------------------+-------------------------|
-| maven2 | hosted | candidates            | checked | Release        | Strict        | candidates       | checked                        | Disable-redeploy   |                                                                    | none                    |
-| maven2 | hosted | releases              | checked | Release        | Strict        | releases         | checked                        | Disable-redeploy   |                                                                    | none                    |
-| npm    | proxy  | npmjs                 | checked |                |               | default          | checked                        |                    | https://registry.npmjs.org                                         |                         |
-| maven2 | proxy  | atlassian_public      | checked | Release        | Strict        | atlassian_public | checked                        | Disable-redeploy ! | https://maven.atlassian.com/content/repositories/atlassian-public/ |                         |
-| maven2 | proxy  | jcenter               | checked | Release        | Strict        | default          | checked                        | Disable-redeploy ! | https://jcenter.bintray.com                                        | maven-public            |
-| maven2 | proxy  | sbt-plugins           | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy ! | http://dl.bintray.com/sbt/sbt-plugin-releases/                     | ivy-releases            |
-| maven2 | proxy  | sbt-releases          | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy ! | https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases            | ivy-releases            |
-| maven2 | proxy  | typesafe-ivy-releases | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy ! | https://dl.bintray.com/typesafe/ivy-releases                       | ivy-releases            |
-| maven2 | group  | ivy-releases          | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy ! |                                                                    | ?typesafe-ivy-releases? |
+| Format | Type   | Name                  | Online  | Version policy | Layout policy | Storage          | Strict Content Type Validation | Deployment policy | Remote Storage                                                     | belongs to group |
+|--------+--------+-----------------------+---------+----------------+---------------+------------------+--------------------------------+-------------------+--------------------------------------------------------------------+------------------|
+| maven2 | hosted | candidates            | checked | Release        | Strict        | candidates       | checked                        | Disable-redeploy  |                                                                    | none             |
+| maven2 | hosted | releases              | checked | Release        | Strict        | releases         | checked                        | Disable-redeploy  |                                                                    | none             |
+| npm    | proxy  | npmjs                 | checked |                |               | default          | checked                        |                   | https://registry.npmjs.org                                         |                  |
+| maven2 | proxy  | atlassian_public      | checked | Release        | Strict        | atlassian_public | checked                        | Disable-redeploy  | https://maven.atlassian.com/content/repositories/atlassian-public/ |                  |
+| maven2 | proxy  | jcenter               | checked | Release        | Strict        | default          | checked                        | Disable-redeploy  | https://jcenter.bintray.com                                        | maven-public     |
+| maven2 | proxy  | sbt-plugins           | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy  | http://dl.bintray.com/sbt/sbt-plugin-releases/                     | ivy-releases     |
+| maven2 | proxy  | sbt-releases          | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy  | https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases            | ivy-releases     |
+| maven2 | proxy  | typesafe-ivy-releases | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy  | https://dl.bintray.com/typesafe/ivy-releases                       | ivy-releases     |
+| maven2 | group  | ivy-releases          | checked | Release        | permissive    | default          | unchecked                      | Disable-redeploy  |                                                                    |                  |
+
+For the *ivy-releases* repository add the following *Member repositories* under *Group*:
+
+#+begin_example
+sbt-plugins
+sbt-releases
+typesafe-ivy-releases
+#+end_example
+
+For the *maven-public* repository add the following additional *Member repository* under *Group*:
+
+#+begin_example
+jcenter
+#+end_example
 
 *** Configure user and roles
 
@@ -6030,7 +6044,9 @@ oc process -n cd templates/secrets -p PROJECT=cd | oc create -n cd -f-
 
 ** TODO Setup and configure Sonarqube
 
-Amend =ods-configuration/ods-core/sonarqube/ocp-config/sonarqube.env=
+Amend =/misc/vagrant/opendevstack/ods-configuration/ods-core/sonarqube/ocp-config/sonarqube.env=
+
+and change all parameter values with base64 in their name with *base64* encoded versions.
 
 #+begin_src bash
 cd /misc/vagrant/opendevstack/ods-core/sonarqube/ocp-config
@@ -6042,8 +6058,6 @@ and type *oc-tailor update* confirm with y and installation should start.
 oc-tailor update
 y
 #+end_src
-
-New output
 
 #+begin_example
 # Comparing templates in D:\misc\vagrant\opendevstack\ods-core\sonarqube\ocp-config with OCP namespace cd.
@@ -6140,496 +6154,6 @@ New output
 # Patch PersistentVolumeClaim sonarqube-extensions
 # Patch DeploymentConfig sonarqube-postgresql
 # Patch DeploymentConfig sonarqube
-#+end_example
-
-Old output
-
-#+begin_example
-# Comparing templates in D:\misc\vagrant\opendevstack\ods-core\sonarqube\ocp-config with OCP namespace cd.
-# Limiting resources to bc,dc,is,pvc,route,svc,secret,configmap with selector app=sonarqube.
-# Found 0 resources in OCP cluster (current state) and 13 resources in processed templates (desired state).
-# 
-# + cm/sonarqube to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,15 @@
-# +apiVersion: v1
-# +data:
-# +  crowd-application: sonarqube
-# +  crowd-url: http://192.168.56.31:8095/crowd
-# +  database-jdbc-url: jdbc:postgresql://sonarqube-postgresql:5432/sonarqube
-# +  database-name: sonarqube
-# +  database-user: sonarqube
-# +  sonarqube-admin-user: admin
-# +kind: ConfigMap
-# +metadata:
-# +  annotations: {}
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube
-#  
-# + secret/sonarqube-app to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,13 @@
-# +apiVersion: v1
-# +data:
-# +  admin-password: b3BlbmRldnN0YWNr
-# +  auth-token: b3BlbmRldnN0YWNr
-# +  crowd-password: c29uYXJxdWJl
-# +kind: Secret
-# +metadata:
-# +  annotations: {}
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube-app
-# +type: Opaque
-#  
-# + secret/sonarqube-postgresql to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,16 @@
-# +apiVersion: v1
-# +data:
-# +  database-password: c29uYXJxdWJl
-# +kind: Secret
-# +metadata:
-# +  annotations:
-# +    managed-annotations.tailor.opendevstack.org: template.openshift.io/expose-database_name,template.openshift.io/expose-password,template.openshift.io/expose-username
-# +    template.openshift.io/expose-database_name: '{.data[''database-name'']}'
-# +    template.openshift.io/expose-password: '{.data[''database-password'']}'
-# +    template.openshift.io/expose-username: '{.data[''database-user'']}'
-# +  labels:
-# +    app: sonarqube
-# +    template: postgresql-persistent-template
-# +  name: sonarqube-postgresql
-# +type: Opaque
-#  
-# + pvc/sonarqube-postgresql to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,18 @@
-# +apiVersion: v1
-# +kind: PersistentVolumeClaim
-# +metadata:
-# +  annotations:
-# +    managed-annotations.tailor.opendevstack.org: volume.beta.kubernetes.io/storage-provisioner
-# +    volume.beta.kubernetes.io/storage-provisioner: ""
-# +  labels:
-# +    app: sonarqube
-# +    template: postgresql-persistent-template
-# +  name: sonarqube-postgresql
-# +spec:
-# +  accessModes:
-# +  - ReadWriteOnce
-# +  resources:
-# +    requests:
-# +      storage: 2Gi
-# +  storageClassName: ""
-#  
-# + pvc/sonarqube-data to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,17 @@
-# +apiVersion: v1
-# +kind: PersistentVolumeClaim
-# +metadata:
-# +  annotations:
-# +    managed-annotations.tailor.opendevstack.org: volume.beta.kubernetes.io/storage-provisioner
-# +    volume.beta.kubernetes.io/storage-provisioner: ""
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube-data
-# +spec:
-# +  accessModes:
-# +  - ReadWriteOnce
-# +  resources:
-# +    requests:
-# +      storage: 2Gi
-# +  storageClassName: ""
-#  
-# + pvc/sonarqube-extensions to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,17 @@
-# +apiVersion: v1
-# +kind: PersistentVolumeClaim
-# +metadata:
-# +  annotations:
-# +    managed-annotations.tailor.opendevstack.org: volume.beta.kubernetes.io/storage-provisioner
-# +    volume.beta.kubernetes.io/storage-provisioner: ""
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube-extensions
-# +spec:
-# +  accessModes:
-# +  - ReadWriteOnce
-# +  resources:
-# +    requests:
-# +      storage: 1Gi
-# +  storageClassName: ""
-#  
-# + is/sonarqube to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,12 @@
-# +apiVersion: image.openshift.io/v1
-# +kind: ImageStream
-# +metadata:
-# +  annotations: {}
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube
-# +spec:
-# +  dockerImageRepository: sonarqube
-# +  lookupPolicy:
-# +    local: false
-#  
-# + bc/sonarqube to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,31 @@
-# +apiVersion: build.openshift.io/v1
-# +kind: BuildConfig
-# +metadata:
-# +  annotations: {}
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube
-# +spec:
-# +  failedBuildsHistoryLimit: 5
-# +  nodeSelector: null
-# +  output:
-# +    to:
-# +      kind: ImageStreamTag
-# +      name: sonarqube:latest
-# +  postCommit: {}
-# +  resources: {}
-# +  runPolicy: Serial
-# +  source:
-# +    contextDir: sonarqube
-# +    git:
-# +      ref: production
-# +      uri: http://192.168.56.31:7990/scm/opendevstack/ods-core.git
-# +    sourceSecret:
-# +      name: cd-user-token
-# +    type: Git
-# +  strategy:
-# +    dockerStrategy: {}
-# +    type: Docker
-# +  successfulBuildsHistoryLimit: 5
-# +  triggers: []
-#  
-# + dc/sonarqube-postgresql to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,104 @@
-# +apiVersion: apps.openshift.io/v1
-# +kind: DeploymentConfig
-# +metadata:
-# +  annotations:
-# +    managed-annotations.tailor.opendevstack.org: template.alpha.openshift.io/wait-for-ready
-# +    original-values.tailor.io/spec.template.spec.containers.0.image: registry.access.redhat.com/rhscl/postgresql-95-rhel7@sha256:de66da4812f0de42cee0bef65899d75f8b1a7440858271f133c8f73c80be663d
-# +    template.alpha.openshift.io/wait-for-ready: "true"
-# +  labels:
-# +    app: sonarqube
-# +    template: postgresql-persistent-template
-# +  name: sonarqube-postgresql
-# +spec:
-# +  replicas: 1
-# +  selector:
-# +    name: sonarqube-postgresql
-# +  strategy:
-# +    activeDeadlineSeconds: 21600
-# +    recreateParams:
-# +      timeoutSeconds: 600
-# +    resources: {}
-# +    type: Recreate
-# +  template:
-# +    metadata:
-# +      annotations: {}
-# +      labels:
-# +        name: sonarqube-postgresql
-# +    spec:
-# +      containers:
-# +      - env:
-# +        - name: POSTGRESQL_USER
-# +          valueFrom:
-# +            configMapKeyRef:
-# +              key: database-user
-# +              name: sonarqube
-# +        - name: POSTGRESQL_PASSWORD
-# +          valueFrom:
-# +            secretKeyRef:
-# +              key: database-password
-# +              name: sonarqube-postgresql
-# +        - name: POSTGRESQL_DATABASE
-# +          valueFrom:
-# +            configMapKeyRef:
-# +              key: database-name
-# +              name: sonarqube
-# +        image: registry.access.redhat.com/rhscl/postgresql-95-rhel7@sha256:de66da4812f0de42cee0bef65899d75f8b1a7440858271f133c8f73c80be663d
-# +        imagePullPolicy: IfNotPresent
-# +        livenessProbe:
-# +          failureThreshold: 3
-# +          initialDelaySeconds: 30
-# +          periodSeconds: 10
-# +          successThreshold: 1
-# +          tcpSocket:
-# +            port: 5432
-# +          timeoutSeconds: 1
-# +        name: postgresql
-# +        ports:
-# +        - containerPort: 5432
-# +          protocol: TCP
-# +        readinessProbe:
-# +          exec:
-# +            command:
-# +            - /bin/sh
-# +            - -i
-# +            - -c
-# +            - psql -h 127.0.0.1 -U $POSTGRESQL_USER -q -d $POSTGRESQL_DATABASE -c
-# +              'SELECT 1'
-# +          failureThreshold: 3
-# +          initialDelaySeconds: 5
-# +          periodSeconds: 10
-# +          successThreshold: 1
-# +          timeoutSeconds: 1
-# +        resources:
-# +          limits:
-# +            memory: 512Mi
-# +        securityContext:
-# +          capabilities: {}
-# +          privileged: false
-# +        terminationMessagePath: /dev/termination-log
-# +        terminationMessagePolicy: File
-# +        volumeMounts:
-# +        - mountPath: /var/lib/pgsql/data
-# +          name: sonarqube-postgresql-data
-# +      dnsPolicy: ClusterFirst
-# +      restartPolicy: Always
-# +      schedulerName: default-scheduler
-# +      securityContext: {}
-# +      terminationGracePeriodSeconds: 30
-# +      volumes:
-# +      - name: sonarqube-postgresql-data
-# +        persistentVolumeClaim:
-# +          claimName: sonarqube-postgresql
-# +  test: false
-# +  triggers:
-# +  - imageChangeParams:
-# +      automatic: true
-# +      containerNames:
-# +      - postgresql
-# +      from:
-# +        kind: ImageStreamTag
-# +        name: postgresql:9.5
-# +        namespace: openshift
-# +    type: ImageChange
-# +  - type: ConfigChange
-#  
-# + dc/sonarqube to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,97 @@
-# +apiVersion: apps.openshift.io/v1
-# +kind: DeploymentConfig
-# +metadata:
-# +  annotations:
-# +    original-values.tailor.io/spec.template.spec.containers.0.image: cd/sonarqube:latest
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube
-# +spec:
-# +  replicas: 1
-# +  selector:
-# +    app: sonarqube
-# +    deploymentconfig: sonarqube
-# +  strategy:
-# +    activeDeadlineSeconds: 21600
-# +    recreateParams:
-# +      timeoutSeconds: 600
-# +    resources: {}
-# +    type: Recreate
-# +  template:
-# +    metadata:
-# +      annotations: {}
-# +      labels:
-# +        app: sonarqube
-# +        deploymentconfig: sonarqube
-# +    spec:
-# +      containers:
-# +      - env:
-# +        - name: SONARQUBE_JDBC_URL
-# +          valueFrom:
-# +            configMapKeyRef:
-# +              key: database-jdbc-url
-# +              name: sonarqube
-# +        - name: SONARQUBE_JDBC_USERNAME
-# +          valueFrom:
-# +            configMapKeyRef:
-# +              key: database-user
-# +              name: sonarqube
-# +        - name: SONARQUBE_JDBC_PASSWORD
-# +          valueFrom:
-# +            secretKeyRef:
-# +              key: database-password
-# +              name: sonarqube-postgresql
-# +        - name: SONARQUBE_CROWD_URL
-# +          valueFrom:
-# +            configMapKeyRef:
-# +              key: crowd-url
-# +              name: sonarqube
-# +        - name: SONARQUBE_CROWD_APP
-# +          valueFrom:
-# +            configMapKeyRef:
-# +              key: crowd-application
-# +              name: sonarqube
-# +        - name: SONARQUBE_CROWD_PWD
-# +          valueFrom:
-# +            secretKeyRef:
-# +              key: crowd-password
-# +              name: sonarqube-app
-# +        image: cd/sonarqube:latest
-# +        imagePullPolicy: Always
-# +        name: sonarqube
-# +        ports:
-# +        - containerPort: 9000
-# +          protocol: TCP
-# +        resources: {}
-# +        terminationMessagePath: /dev/termination-log
-# +        terminationMessagePolicy: File
-# +        volumeMounts:
-# +        - mountPath: /opt/sonarqube/data
-# +          name: sonarqube-data
-# +        - mountPath: /opt/sonarqube/extensions
-# +          name: sonarqube-extensions
-# +      dnsPolicy: ClusterFirst
-# +      restartPolicy: Always
-# +      schedulerName: default-scheduler
-# +      securityContext: {}
-# +      terminationGracePeriodSeconds: 30
-# +      volumes:
-# +      - name: sonarqube-data
-# +        persistentVolumeClaim:
-# +          claimName: sonarqube-data
-# +      - name: sonarqube-extensions
-# +        persistentVolumeClaim:
-# +          claimName: sonarqube-extensions
-# +  test: false
-# +  triggers:
-# +  - type: ConfigChange
-# +  - imageChangeParams:
-# +      automatic: true
-# +      containerNames:
-# +      - sonarqube
-# +      from:
-# +        kind: ImageStreamTag
-# +        name: sonarqube:latest
-# +        namespace: cd
-# +    type: ImageChange
-#  
-# + svc/sonarqube-postgresql to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,21 @@
-# +apiVersion: v1
-# +kind: Service
-# +metadata:
-# +  annotations:
-# +    managed-annotations.tailor.opendevstack.org: template.openshift.io/expose-uri
-# +    template.openshift.io/expose-uri: postgres://{.spec.clusterIP}:{.spec.ports[?(.name=="postgresql")].port}
-# +  labels:
-# +    app: sonarqube
-# +    template: postgresql-persistent-template
-# +  name: sonarqube-postgresql
-# +spec:
-# +  ports:
-# +  - name: postgresql
-# +    port: 5432
-# +    protocol: TCP
-# +    targetPort: 5432
-# +  selector:
-# +    name: sonarqube-postgresql
-# +  sessionAffinity: None
-# +  type: ClusterIP
-#  
-# + svc/sonarqube to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,18 @@
-# +apiVersion: v1
-# +kind: Service
-# +metadata:
-# +  annotations: {}
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube
-# +spec:
-# +  ports:
-# +  - name: 9000-tcp
-# +    port: 9000
-# +    protocol: TCP
-# +    targetPort: 9000
-# +  selector:
-# +    deploymentconfig: sonarqube
-# +  sessionAffinity: None
-# +  type: ClusterIP
-#  
-# + route/sonarqube to create
-# --- Current State (OpenShift cluster)
-# +++ Desired State (Processed template)
-# @@ -1 +1,20 @@
-# +apiVersion: route.openshift.io/v1
-# +kind: Route
-# +metadata:
-# +  annotations: {}
-# +  labels:
-# +    app: sonarqube
-# +  name: sonarqube
-# +spec:
-# +  host: sonarqube-cd.192.168.99.100.nip.io
-# +  port:
-# +    targetPort: 9000-tcp
-# +  tls:
-# +    insecureEdgeTerminationPolicy: Redirect
-# +    termination: edge
-# +  to:
-# +    kind: Service
-# +    name: sonarqube
-# +    weight: 100
-# +  wildcardPolicy: None
-#  
-# 
-# Summary: 0 in sync, 13 to create, 0 to update, 0 to delete
-# 
-# Apply changes? [y/n]: y
-# Creating ConfigMap sonarqube
-# Applied processed ConfigMap template.
-# Creating Secret sonarqube-app
-# Applied processed Secret template.
-# Creating Secret sonarqube-postgresql
-# Applied processed Secret template.
-# Creating PersistentVolumeClaim sonarqube-postgresql
-# Applied processed PersistentVolumeClaim template.
-# Creating PersistentVolumeClaim sonarqube-data
-# Applied processed PersistentVolumeClaim template.
-# Creating PersistentVolumeClaim sonarqube-extensions
-# Applied processed PersistentVolumeClaim template.
-# Creating ImageStream sonarqube
-# Applied processed ImageStream template.
-# Creating BuildConfig sonarqube
-# Applied processed BuildConfig template.
-# Creating DeploymentConfig sonarqube-postgresql
-# Applied processed DeploymentConfig template.
-# Creating DeploymentConfig sonarqube
-# Applied processed DeploymentConfig template.
-# Creating Service sonarqube-postgresql
-# Applied processed Service template.
-# Creating Service sonarqube
-# Applied processed Service template.
-# Creating Route sonarqube
-# Applied processed Route template.
 #+end_example
 
 After the installation has taken place, you will have to build sonarqube:
@@ -11831,7 +11355,6 @@ minishift stop
 # Stopping the OpenShift cluster...
 # Cluster stopped.
 #+end_example
-
 
 ** tj
 

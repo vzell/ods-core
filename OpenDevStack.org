@@ -11594,3 +11594,59 @@ jira/jre/bin
 
 /var/atlassian/application-data/jira/plugins/installed-plugins
 
+
+* After expiration of licenses
+
+** Crowd
+
+Click on *Setup Crowd*
+
+#+begin_example
+System errors
+License Too Old For Build error
+Time 	Level 	Description 	Exception
+2018-12-19 10:34:31 	fatal 	Please go *here* to update your license if you have not already done so, and then restart Crowd.
+#+end_example
+
+#+begin_example
+License
+
+Your license has now expired. An updated license must be installed to continue using Crowd.
+License key
+An evaluation license key is available from the Atlassian website.  Or you can access your license key on My Atlassian. Updating the license will require a server restart.
+#+end_example
+
+** Jira
+
+Your JIRA Software license expired 3 days ago. You can no longer view JIRA Software features. Please *renew* your JIRA Software license to reactivate the application.
+
+** Confluence
+
+Administration
+Error
+License Expiry
+What does this check do?
+
+Checks if the software maintenance period included with your license has expired. Software maintenance entitles you to support and product upgrades.
+Result
+
+Your maintenance period expired on 16 Dec 2018. Renew your license to be eligible for support and product upgrades.
+
+*How can I resolve this?*
+
+** BitBucket
+
+Your evaluation license is expired. Users will not be able to push code to repositories hosted on Bitbucket
+
+*Purchase a license*
+
+** How do I extend my server product evaluation?
+
+https://www.atlassian.com/licensing/purchase-licensing#evaluations-2
+
+We're happy to extend your server product evaluation period for up to 90 days. To generate a new evaluation key:
+
+    Login to my.atlassian.com. You'll arrive on the Licenses page by default.
+    Click 'New Evaluation License' to create a new key with an additional 30 days evaluation time.
+    Apply this key to your server under the Administration > License Details page.
+
